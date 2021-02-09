@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1200.0" minHeight="1000.0" minWidth="1200.0" prefHeight="1000.0" prefWidth="1200.0" style="-fx-background-color: #fff;" styleClass="mainFxmlClass" stylesheets="@../css/fxmltelalogin.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaatendcgae.controller.FXMLTelaLoginController">
+   <children>
+      <FlowPane layoutX="401.0" layoutY="333.0" prefHeight="362.0" prefWidth="442.0" style="-fx-background-color: #008633; -fx-background-radius: 20px; -fx-border-radius: 20px;">
+         <children>
+            <Label fx:id="labelLSincorreto" alignment="TOP_CENTER" prefHeight="47.0" prefWidth="442.0" text="Login ou senha incorreta" textFill="#ee0b0b" visible="false">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label prefHeight="54.0" prefWidth="37.0" />
+            <ImageView fitHeight="52.0" fitWidth="62.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icone/user.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="55.0" prefWidth="13.0" />
+            <JFXTextField fx:id="cmpLogin" labelFloat="true" onKeyPressed="#logar" prefHeight="44.0" prefWidth="295.0" promptText="Matrícula" style="-fx-background-color: #fff;">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXTextField>
+            <Label prefHeight="89.0" prefWidth="44.0" />
+            <ImageView fitHeight="64.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icone/cadeado.png" />
+               </image>
+            </ImageView>
+            <Label prefHeight="55.0" prefWidth="16.0" />
+            <JFXPasswordField fx:id="cmpSenha" labelFloat="true" onKeyPressed="#logar" prefHeight="44.0" prefWidth="295.0" promptText="Senha" style="-fx-background-color: #fff;">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </JFXPasswordField>
+            <Label prefHeight="77.0" prefWidth="187.0" />
+            <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#logarSistema" prefHeight="48.0" prefWidth="131.0" style="-fx-background-radius: 20px;" text="Log in">
+               <font>
+                  <Font name="Cambria Bold" size="18.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Label prefHeight="58.0" prefWidth="205.0" />
+            <Button fx:id="btnSingIn" mnemonicParsing="false" onAction="#cadastrarServidor" prefHeight="42.0" prefWidth="100.0" style="-fx-background-radius: 20px;" text="Sing up">
+               <font>
+                  <Font name="Cambria Bold" size="14.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+         </children>
+         <effect>
+            <DropShadow height="83.2" radius="41.1" spread="0.48" width="83.2" />
+         </effect>
+      </FlowPane>
+      <Pane layoutX="-3.0" maxHeight="108.0" minHeight="102.0" minWidth="1200.0" prefHeight="108.0" prefWidth="1206.0" style="-fx-background-color: #008633;">
+         <children>
+            <Label layoutX="266.0" layoutY="29.0" text="Coordenação Geral de Assistência estudantil" textFill="#fcf7f7">
+               <font>
+                  <Font name="Cambria Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

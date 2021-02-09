@@ -1,0 +1,23 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16/09/2020, 13:42:28
+    Author     : Neto
+*/
+
+.mainFxmlClass{}
+
+.tab{
+    -fx-background-color: #008633;
+    -jfx-focus-color: red;
+    
+}
+.tab-header-background{
+    -fx-background-color: #008633;
+}
+.jfx-tab-pane{
+    -fx-background-color: blue;
+}

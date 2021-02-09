@@ -1,0 +1,15 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+
+}
+.jfx-text-field, .jfx-password-field, .jfx-text-area{
+    -fx-prompt-text-fill: #adadad;
+    -jfx-focus-color: yellow;
+    -jfx-unfocus-color: blue;
+    -fx-text-inner-color: black;
+    
+    
+}

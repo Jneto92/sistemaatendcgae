@@ -9,10 +9,15 @@ import java.io.IOException;
 import static java.lang.reflect.Array.get;
 import java.net.URL;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,8 +32,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javax.swing.JOptionPane;
+import sistemaatendcgae.Dao.AtendimentoDao;
 import sistemaatendcgae.Dao.PublicoDao;
+import sistemaatendcgae.model.domain.Atendimento;
 import sistemaatendcgae.model.domain.Publico;
+import sistemaatendcgae.model.domain.TipoAtendimento;
 
 
 
@@ -77,7 +85,22 @@ public class FXMLTelaPublicoController implements Initializable {
     @FXML
     private void registrarAtendimento(ActionEvent event) throws ParseException {
         
+        LocalDateTime agora = LocalDateTime.now();
+
+        // formatar a data
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
+        String dataFormatada = formatterData.format(agora);
+
+        // formatar a hora
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String horaFormatada = formatterHora.format(agora);
         
+        SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
+        Time hora = new Time(format2.parse(horaFormatada).getTime());
+        //System.out.println(hora);
+        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        Date data = new Date(format.parse(dataFormatada).getTime());
+        //System.out.println(data);
         
         if(campoCpf.getText().isEmpty() || campoNome.getText().isEmpty() || campoEmail.getText().isEmpty()){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
@@ -102,9 +125,13 @@ public class FXMLTelaPublicoController implements Initializable {
             String nome = campoNome.getText();
             String email = campoEmail.getText();
             String tipo = selecionarTipo.getValue().toString();
-            Publico pub = new Publico(cpf, nome, email, tipo);
+            String status = "Na fila";
+            Publico pub = new Publico(cpf, nome, email);
             PublicoDao dao = new PublicoDao();
             dao.solicitarAtendimento(pub);
+            Atendimento at = new Atendimento(nome, email, status, tipo, dataFormatada, horaFormatada);
+            AtendimentoDao aDao = new AtendimentoDao();
+            aDao.solicitarAtendimento(at);
             JOptionPane.showMessageDialog(null, "Registro feito com sucesso");
             campoObg1.setVisible(false);
             campoObg2.setVisible(false);

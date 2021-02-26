@@ -63,26 +63,31 @@
                   <Font name="MS UI Gothic" size="20.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="cmpFone" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="285.0" prefHeight="39.0" prefWidth="320.0" promptText="Telefone">
+            <JFXTextField fx:id="cmpFone" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Telefone">
                <font>
                   <Font name="MS UI Gothic" size="20.0" />
                </font>
             </JFXTextField>
-            <JFXTextField fx:id="cmpSetor" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="347.0" prefHeight="39.0" prefWidth="320.0" promptText="Setor">
+            <JFXTextField fx:id="cmpSetor" focusColor="#008633" labelFloat="true" layoutX="496.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Setor">
                <font>
                   <Font name="MS UI Gothic" size="20.0" />
                </font>
             </JFXTextField>
-            <JFXPasswordField fx:id="cmpSenha" labelFloat="true" layoutX="98.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Senha">
+            <JFXPasswordField fx:id="cmpSenha" labelFloat="true" layoutX="98.0" layoutY="285.0" prefHeight="39.0" prefWidth="320.0" promptText="Senha">
                <font>
                   <Font name="MS UI Gothic" size="20.0" />
                </font>
             </JFXPasswordField>
-            <JFXPasswordField fx:id="cmpCsenha" labelFloat="true" layoutX="496.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Confirmar senha">
+            <JFXPasswordField fx:id="cmpCsenha" labelFloat="true" layoutX="496.0" layoutY="285.0" prefHeight="39.0" prefWidth="320.0" promptText="Confirmar senha">
                <font>
                   <Font name="MS UI Gothic" size="20.0" />
                </font>
             </JFXPasswordField>
+            <JFXTextField fx:id="cmpFuncao" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="347.0" prefHeight="39.0" prefWidth="320.0" promptText="Função">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
             <Label fx:id="lb1" layoutX="418.0" layoutY="78.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
                <font>
                   <Font name="System Bold" size="36.0" />
@@ -119,6 +124,11 @@
                </font>
             </Label>
             <Label fx:id="lb6" layoutX="816.0" layoutY="216.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb9" layoutX="816.0" layoutY="274.0" prefHeight="53.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>

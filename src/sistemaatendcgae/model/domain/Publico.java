@@ -34,24 +34,15 @@ public class Publico {
     private String cpf;
     private String nome;
     private String email;
-    private String tipoAtendimento;
     
 
-    public Publico(String cpf, String nome, String email, String tipoAtedimento) {
+    public Publico(String cpf, String nome, String email) {
         this.cpf = cpf;
         this.nome = nome;
         this.email = email;
-        this.tipoAtendimento = tipoAtedimento;
-        
         
     }
-    public Publico(String nome, String email, String tipoAtedimento) {
-        this.nome = nome;
-        this.email = email;
-        this.tipoAtendimento = tipoAtedimento;
-        
-        
-    }
+    
     public Publico() {
         
         
@@ -59,13 +50,7 @@ public class Publico {
     }
     
     
-    public String getTipoAtendimento() {
-        return tipoAtendimento;
-    }
-
-    public void setTipoAtendimento(String tipoAtendimento) {
-        this.tipoAtendimento = tipoAtendimento;
-    }
+    
     
     
     public int getId_pessoa() {

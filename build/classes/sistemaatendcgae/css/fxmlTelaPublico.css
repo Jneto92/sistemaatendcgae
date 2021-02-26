@@ -8,6 +8,6 @@ and open the template in the editor.
     Author     : NETO
 */
 .root {
-    -fx-background-color:lightgray
+    -fx-background-color:lightgray;
 }
 

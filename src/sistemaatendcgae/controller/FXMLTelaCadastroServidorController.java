@@ -7,8 +7,11 @@ package sistemaatendcgae.controller;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javax.swing.JOptionPane;
 import sistemaatendcgae.Dao.ServidorDao;
+import sistemaatendcgae.model.domain.Main;
 import sistemaatendcgae.model.domain.Publico;
 import sistemaatendcgae.model.domain.Servidor;
 import static sistemaatendcgae.model.domain.Main.setStage;
@@ -75,6 +79,10 @@ public class FXMLTelaCadastroServidorController implements Initializable {
     private Label lb4;
     @FXML
     private Label lb6;
+    @FXML
+    private JFXTextField cmpFuncao;
+    @FXML
+    private Label lb9;
 
     /**
      * Initializes the controller class.
@@ -90,7 +98,7 @@ public class FXMLTelaCadastroServidorController implements Initializable {
     @FXML
     private void salvarCadastro(ActionEvent event) {
         if(cmpMatricula.getText().isEmpty() || cmpNome.getText().isEmpty() || cmpEmail.getText().isEmpty() || cmpSenha.getText().isEmpty() || cmpCsenha.getText().isEmpty()
-                || cmpFone.getText().isEmpty() || cmpSetor.getText().isEmpty() || cmpCpf.getText().isEmpty()){
+                || cmpFone.getText().isEmpty() || cmpSetor.getText().isEmpty() || cmpCpf.getText().isEmpty() || cmpFuncao.getText().isEmpty()){
             
             if(cmpMatricula.getText().isEmpty()){
                 lb1.setVisible(true);
@@ -113,21 +121,26 @@ public class FXMLTelaCadastroServidorController implements Initializable {
                 lb4.setVisible(false);
             } 
             if(cmpSenha.getText().isEmpty()){
-                lb5.setVisible(true);
-            }else{
-                lb5.setVisible(false);
-            }
-            if(cmpCsenha.getText().isEmpty()){
-                lb6.setVisible(true);
-            }else{
-                lb6.setVisible(false);
-            }
-            if(cmpFone.getText().isEmpty()){
                 lb7.setVisible(true);
             }else{
                 lb7.setVisible(false);
             }
+            if(cmpCsenha.getText().isEmpty()){
+                lb9.setVisible(true);
+            }else{
+                lb9.setVisible(false);
+            }
+            if(cmpFone.getText().isEmpty()){
+                lb5.setVisible(true);
+            }else{
+                lb5.setVisible(false);
+            }
             if(cmpSetor.getText().isEmpty()){
+                lb6.setVisible(true);
+            }else{
+                lb6.setVisible(false);
+            }
+            if(cmpFuncao.getText().isEmpty()){
                 lb8.setVisible(true);
             }else{
                 lb8.setVisible(false);
@@ -141,12 +154,13 @@ public class FXMLTelaCadastroServidorController implements Initializable {
             String senha = cmpSenha.getText();
             String fone = cmpFone.getText();
             String setor = cmpSetor.getText();
-            Servidor serv = new Servidor(matricula, nome, email, cpf, senha, fone, setor);
+            String funcao = cmpFuncao.getText();
+            Servidor serv = new Servidor(matricula, nome, email, cpf, senha, fone, setor, funcao);
             ServidorDao dao = new ServidorDao();
             dao.registrarServidor(serv);
             limparCampo();
             JOptionPane.showMessageDialog(null, "Registro feito com sucesso");
-            
+           
             
         }
     }
@@ -167,6 +181,7 @@ public class FXMLTelaCadastroServidorController implements Initializable {
         lb6.setVisible(false);
         lb7.setVisible(false);
         lb8.setVisible(false);
+        lb9.setVisible(false);
         
         cmpMatricula.setText("");
         cmpNome.setText("");
@@ -176,6 +191,7 @@ public class FXMLTelaCadastroServidorController implements Initializable {
         cmpCsenha.setText("");
         cmpFone.setText("");
         cmpSetor.setText("");
+        cmpFuncao.setText("");
     }
 
     public Pane getPnTitulo() {

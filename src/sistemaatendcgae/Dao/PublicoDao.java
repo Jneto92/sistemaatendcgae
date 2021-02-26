@@ -8,10 +8,14 @@ package sistemaatendcgae.Dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 import sistemaatendcgae.model.domain.Publico;
 
 /**
@@ -27,27 +31,10 @@ public class PublicoDao {
     
     public void solicitarAtendimento(Publico pub) throws ParseException{
         
-        // data/hora atual
-        LocalDateTime agora = LocalDateTime.now();
-
-        // formatar a data
-        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("dd/MM/uuuu");
-        String dataFormatada = formatterData.format(agora);
-
-        // formatar a hora
-        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String horaFormatada = formatterHora.format(agora);
-        
-        /*SimpleDateFormat format2 = new SimpleDateFormat("HH:mm:ss");
-        Time hora = new Time(format2.parse(horaFormatada).getTime());
-        System.out.println(hora);
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        Date data = new Date(format.parse(dataFormatada).getTime());
-        System.out.println(data);
-        */
         
         
-        String sql = "INSERT INTO tabela_publico(cpf, nome, email, tipoAtendimento, dataSolicitacao, horaSolicitacao, status) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        
+        String sql = "INSERT INTO tabela_publico(cpf, nome, email) VALUES(?, ?, ?)";
         try {
             conn = this.conectar();
             
@@ -55,21 +42,39 @@ public class PublicoDao {
             pstmt.setString(1, pub.getCpf());
             pstmt.setString(2, pub.getNome());
             pstmt.setString(3, pub.getEmail());
-            pstmt.setString(4, pub.getTipoAtendimento());
-            pstmt.setString(5, dataFormatada);
-            pstmt.setString(6, horaFormatada);
-            pstmt.setString(7, "Na fila");
+            
             
             pstmt.executeUpdate();
             pstmt.close();
             System.out.println("Registros inseridos");
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Usuário já está no banco");
         }
+        
+        
     }
     
-    
+    public List<Publico> lista(){
+        String sql = "SELECT * FROM tabela_publico WHERE status = 'Na fila'";
+        List<Publico> retorno = new ArrayList<>();
+        try {
+            Connection conn = this.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while(resultado.next()){
+                Publico pub = new Publico();
+                pub.setNome(resultado.getString("nome"));
+                pub.setEmail(resultado.getString("email"));
+                pub.setCpf(resultado.getString("cpf"));
+                
+                retorno.add(pub);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return retorno;
+    };
     
     
     private Connection conectar(){ 

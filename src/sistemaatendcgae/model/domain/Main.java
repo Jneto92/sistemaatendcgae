@@ -12,7 +12,11 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import conexoes.Conexao;
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javafx.stage.StageStyle;
@@ -30,7 +34,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaPrincipal.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaPrincipal2.fxml"));
         
         Scene scene = new Scene(root);
         //scene.getStylesheets().add(getClass().getResource("fxmlTelaPublico.css").toExternalForm());
@@ -48,17 +52,19 @@ public class Main extends Application {
      * @param args the command line arguments
      * @throws java.lang.ClassNotFoundException
      */
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, ParseException {
         Conexao conn = new Conexao();
         conn.conectar();
         CriarTabelaDao pub = new CriarTabelaDao();
+        Arquivos a = new Arquivos();
         //pub.tabelaPublico();
         //pub.tabelaServidor();
         //pub.tabelaAtendimento();
-        
-        
+        //pub.tabelaStatus();
+        //pub.tabelaTipoAtendimento();
+        //a.criarDiretorio();
         launch(args);
-       conn.desconectar();
+        conn.desconectar();
     }
 
     public static Stage getStage() {

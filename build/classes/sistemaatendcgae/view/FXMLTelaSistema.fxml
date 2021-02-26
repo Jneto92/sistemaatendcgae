@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemaatendcgae.controller.FXMLTelaSistemaController">
+    <stylesheets>
+        <URL value="@/sistemaatendcgae/css/fxmltelasistema.css" />
+    </stylesheets>
+   <children>
+      <Pane maxHeight="223.0" minHeight="102.0" minWidth="1500.0" prefHeight="223.0" prefWidth="1500.0" style="-fx-background-color: #008633;" styleClass="tab" stylesheets="@../css/fxmltelacadastroservidor.css">
+         <children>
+            <Label layoutX="375.0" layoutY="29.0" text="Coordenação Geral de Assistência estudantil" textFill="#fcf7f7">
+               <font>
+                  <Font name="Cambria Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <AnchorPane layoutX="110.0" layoutY="160.0" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
+         <children>
+            <Button fx:id="btnLogout" layoutX="1066.0" layoutY="31.0" mnemonicParsing="false" onAction="#deslogarSistema" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Voltar" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnGerarRel1" layoutX="725.0" layoutY="622.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Atualizar Servidor" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnAddServidor" layoutX="454.0" layoutY="622.0" mnemonicParsing="false" onAction="#adcServidor" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Adicionar servidor" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnGerarRel" layoutX="173.0" layoutY="622.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Gerar relatório" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <TableView layoutX="235.0" layoutY="171.0" prefHeight="249.0" prefWidth="965.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="C1" />
+                <TableColumn prefWidth="75.0" text="C2" />
+              </columns>
+            </TableView>
+         </children>
+         <effect>
+            <DropShadow height="80.09" radius="39.545" spread="0.51" width="80.09" />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

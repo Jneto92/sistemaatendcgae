@@ -58,10 +58,12 @@ public class FXMLTelaPrincipalController implements Initializable {
     private void paginaPublico(ActionEvent event) {
         abrirHome("/sistemaatendcgae/view/FXMLTelaPublico.fxml", btnPublico);
     }
-
+    public void abrirTelaServidor(){
+        abrirHome("/sistemaatendcgae/view/FXMLTelaLogin.fxml", btnServidor);
+    }
     @FXML
     private void paginaServidor(ActionEvent event) {
-        
+        //abrirHome("/sistemaatendcgae/view/FXMLTelaPublico.fxml", btnServidor);
         abrirHome("/sistemaatendcgae/view/FXMLTelaLogin.fxml", btnServidor);
             
         
@@ -83,9 +85,16 @@ public class FXMLTelaPrincipalController implements Initializable {
             AnchorPane.setRightAnchor(a, 0.0);
             AnchorPane.setBottomAnchor(a, 0.0);
             painelDir.getChildren().setAll(a);
-            btnServidor.setStyle("-fx-background-color: "+ "#aaaaaa"+";");
-            btnPublico.setStyle("-fx-background-color: "+ "#aaaaaa"+";");
-            btnHome.setStyle("-fx-background-color: "+ "#aaaaaa"+";");
+            btnServidor.setStyle("-fx-background-color: "+ "#aaa");
+            btnServidor.setStyle("-fx-border-color: "+ "#000");
+            btnServidor.setStyle("-fx-border-width: "+ "5px");
+            btnPublico.setStyle("-fx-background-color: "+ "#aaa");
+            btnPublico.setStyle("-fx-border-color: "+ "#000");
+            btnPublico.setStyle("-fx-border-width: "+ "5px");
+            btnHome.setStyle("-fx-background-color: "+ "#aaa");
+            btnHome.setStyle("-fx-border-color: "+ "#000");
+            btnHome.setStyle("-fx-border-width: "+ "5px"+";");
+            
             mudarCorBotao(btn);
             
         } catch (IOException ex) {

@@ -44,7 +44,6 @@ public class FXMLTelaLoginController implements Initializable {
     public static int userLogado;
     @FXML
     private Button btnLogin;
-    @FXML
     private Button btnSingIn;
     @FXML
     private Label labelLSincorreto;
@@ -52,6 +51,8 @@ public class FXMLTelaLoginController implements Initializable {
     public JFXTextField cmpLogin;
     @FXML
     private JFXPasswordField cmpSenha;
+    @FXML
+    private Button btnTrocaSenha;
 
     /**
      * Initializes the controller class.
@@ -109,21 +110,6 @@ public class FXMLTelaLoginController implements Initializable {
         this.cmpSenha = cmpSenha;
     }
 
-    @FXML
-    private void cadastrarServidor(ActionEvent event) throws IOException, Exception {
-        try {
-            Stage stage = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaCadastroServidor.fxml"));
-            Scene scene = new Scene(root);
-            //stage.initStyle(StageStyle.UNDECORATED);
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            Logger.getLogger(FXMLTelaPrincipalController.class.getName()).log(Level.SEVERE, null, e);
-        }
-        
-        
-    }
     private Connection conectar(){ 
         String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
         Connection conn = null;
@@ -190,6 +176,22 @@ public class FXMLTelaLoginController implements Initializable {
             logarnoSistema();
         }
         
+    }
+
+    @FXML
+    private void trocarSenha(ActionEvent event) throws IOException {
+        try {
+            Main.getStage().close();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaEsqueceuSenha.fxml"));
+            Scene scene = new Scene(root);
+            Main.setStage(stage);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Logger.getLogger(FXMLTelaPrincipalController.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     

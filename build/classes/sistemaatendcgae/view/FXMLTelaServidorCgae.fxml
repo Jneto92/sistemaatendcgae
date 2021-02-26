@@ -26,9 +26,9 @@
             <DropShadow height="80.09" radius="39.545" spread="0.51" width="80.09" />
          </effect>
          <children>
-            <JFXTabPane layoutX="67.0" layoutY="100.0" prefHeight="655.0" prefWidth="1152.0" style="-fx-background-color: #e2e2e2;">
+            <JFXTabPane fx:id="tabPane1" layoutX="67.0" layoutY="100.0" prefHeight="655.0" prefWidth="1152.0" style="-fx-background-color: #e2e2e2;">
                <tabs>
-                  <Tab text="Perfil do Servidor">
+                  <Tab fx:id="tabPerfil" onSelectionChanged="#mostrarPerfil" text="Perfil do Servidor">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e5e5e5;">
                            <children>
@@ -38,13 +38,23 @@
                                     <JFXTextField fx:id="cmpMatricula" editable="false" layoutX="30.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
                                     <JFXTextField fx:id="cmpNome" editable="false" layoutX="370.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
                                     <Label fx:id="lbMatricula1" layoutX="370.0" layoutY="35.0" text="Nome" />
-                                    <JFXTextField fx:id="cmpEmail" editable="false" layoutX="687.0" layoutY="56.0" prefHeight="31.0" prefWidth="256.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextField fx:id="cmpEmail" editable="false" layoutX="687.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
                                     <Label fx:id="lbMatricula11" layoutX="687.0" layoutY="35.0" text="E-mail" />
                                     <Label fx:id="lbMatricula111" layoutX="30.0" layoutY="110.0" text="Telefone" />
                                     <JFXTextField fx:id="cmpTelefone" editable="false" layoutX="30.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
                                     <Label fx:id="lbMatricula1111" layoutX="370.0" layoutY="110.0" text="Setor" />
                                     <JFXTextField fx:id="cmpSetor" editable="false" layoutX="370.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
                                     <JFXPasswordField fx:id="novaSenha" layoutX="61.0" layoutY="294.0" promptText="Nova senha" style="-fx-background-color: #ddd;" styleClass="mainFxmlClass" stylesheets="@../css/fxmltelacadastroservidor.css" />
+                                    <JFXTextField fx:id="cmpFuncao" editable="false" layoutX="687.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula112" layoutX="687.0" layoutY="110.0" text="Função" />
+                                    <Button fx:id="btnSistema" layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#acesssarSistema" prefHeight="44.0" prefWidth="254.0" style="-fx-background-color: ab0000;" text="Acesso ao Sistema" textFill="#eeeeee">
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                       <font>
+                                          <Font name="Cambria Bold" size="18.0" />
+                                       </font>
+                                    </Button>
                                  </children>
                               </Pane>
                               <Button fx:id="btnAltSenha" layoutX="114.0" layoutY="400.0" mnemonicParsing="false" onAction="#alterarSenha" prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Alterar senha" textFill="#eeeeee">
@@ -63,24 +73,84 @@
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <TableView fx:id="tabelaAtendimento" layoutX="87.0" layoutY="123.0" prefHeight="200.0" prefWidth="789.0">
+                              <TableView fx:id="tabelaAtendimento" layoutX="87.0" layoutY="123.0" prefHeight="200.0" prefWidth="964.0">
                                 <columns>
                                   <TableColumn fx:id="colSenha" prefWidth="152.0" text="Senha" />
                                   <TableColumn fx:id="colNome" prefWidth="385.0" text="Nome" />
-                                    <TableColumn fx:id="colTipo" minWidth="0.0" prefWidth="210.0" text="Tipo" />
+                                    <TableColumn fx:id="colEmail" minWidth="0.0" prefWidth="210.0" text="E-mail" />
+                                    <TableColumn fx:id="colTipo" prefWidth="201.0" text="Tipo" />
                                 </columns>
                               </TableView>
+                              <Button fx:id="btnLogout1" layoutX="87.0" layoutY="446.0" mnemonicParsing="false" onAction="#atualizarLista" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: #008633;" text="Atualizar" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnLogout11" layoutX="291.0" layoutY="446.0" mnemonicParsing="false" onAction="#atenderSenha" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: #4169E1;" text="Atender" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
                            </children></AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Atendimento">
+                  <Tab onSelectionChanged="#carregarAtendimento" text="Atendimento">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane layoutX="22.0" layoutY="59.0" prefHeight="375.0" prefWidth="1043.0" style="-fx-border-color: black; -fx-background-color: #fff;" AnchorPane.bottomAnchor="184.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="59.0">
+                                 <children>
+                                    <Label fx:id="lbMatricula11" layoutX="30.0" layoutY="35.0" text="Senha" />
+                                    <JFXTextField fx:id="cmpSenhaAt" editable="false" layoutX="30.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextField fx:id="cmpNomeAt" editable="false" layoutX="30.0" layoutY="191.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula111" layoutX="30.0" layoutY="170.0" text="Nome" />
+                                    <JFXTextField fx:id="cmpEmailAt" editable="false" layoutX="30.0" layoutY="260.0" prefHeight="31.0" prefWidth="290.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula1111" layoutX="30.0" layoutY="239.0" text="E-mail" />
+                                    <Label fx:id="lbMatricula11112" layoutX="30.0" layoutY="102.0" text="Tipo" />
+                                    <JFXTextField fx:id="cmpTipoAt" editable="false" layoutX="30.0" layoutY="123.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextArea fx:id="cmpObservacoesAt" layoutX="405.0" layoutY="38.0" promptText="Observações" style="-fx-border-color: #000;" />
+                                 </children>
+                              </Pane>
+                              <Button fx:id="btnEncerrarAt" layoutX="36.0" layoutY="453.0" mnemonicParsing="false" onAction="#encerrarAtendimento" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: #008633;" text="Encerrar Atendimento" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnCancelarAt" layoutX="388.0" layoutY="453.0" mnemonicParsing="false" onAction="#cancelarAtendimento" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: ab0000;" text="Cancelar Atendimento" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
                     </content>
                   </Tab>
-                  <Tab text="Sistema">
+                  <Tab onSelectionChanged="#mostrarEncerrados" text="Atendimentos encerrados">
                     <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tabelaAtEncerrados" layoutX="7.0" layoutY="139.0" prefHeight="200.0" prefWidth="1141.0">
+                                 <columns>
+                                    <TableColumn fx:id="colSenha1" prefWidth="79.0" text="Senha" />
+                                    <TableColumn fx:id="colNome1" prefWidth="301.0" text="Nome" />
+                                    <TableColumn fx:id="colEmail1" minWidth="0.0" prefWidth="273.0" text="E-mail" />
+                                    <TableColumn fx:id="colServidor1" prefWidth="265.0" text="Servidor" />
+                                    <TableColumn fx:id="colTipo1" prefWidth="130.0" text="Tipo" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
                     </content>
                   </Tab>
                </tabs>

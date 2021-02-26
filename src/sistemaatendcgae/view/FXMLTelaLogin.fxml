@@ -59,10 +59,10 @@
                   <DropShadow />
                </effect>
             </Button>
-            <Label prefHeight="58.0" prefWidth="205.0" />
-            <Button fx:id="btnSingIn" mnemonicParsing="false" onAction="#cadastrarServidor" prefHeight="42.0" prefWidth="100.0" style="-fx-background-radius: 20px;" text="Sing up">
+            <Label prefHeight="58.0" prefWidth="155.0" />
+            <Button fx:id="btnTrocaSenha" mnemonicParsing="false" onAction="#trocarSenha" prefHeight="51.0" prefWidth="190.0" style="-fx-background-radius: 20px;" text="Esqueceu a senha?">
                <font>
-                  <Font name="Cambria Bold" size="14.0" />
+                  <Font name="Cambria Bold" size="18.0" />
                </font>
                <effect>
                   <DropShadow />

@@ -24,8 +24,9 @@ public class Servidor {
     private String telefone;
     private String cpf;
     private String setor;
+    private String funcao;
 
-    public Servidor(int matricula, String nome, String email, String cpf, String senha_acesso, String telefone, String setor) {
+    public Servidor(int matricula, String nome, String email, String cpf, String senha_acesso, String telefone, String setor, String funcao) {
         this.matricula = matricula;
         this.nome = nome;
         this.senha_acesso = senha_acesso;
@@ -33,6 +34,34 @@ public class Servidor {
         this.telefone = telefone;
         this.cpf = cpf;
         this.setor = setor;
+        this.funcao = funcao;
+    }
+
+    public Servidor(int matricula, String nome, String senha_acesso, String email, String telefone, String cpf, String setor) {
+        this.matricula = matricula;
+        this.nome = nome;
+        this.senha_acesso = senha_acesso;
+        this.email = email;
+        this.telefone = telefone;
+        this.cpf = cpf;
+        this.setor = setor;
+    }
+
+    public Servidor(int matricula, String senha_acesso, String email, String cpf) {
+        this.matricula = matricula;
+        this.senha_acesso = senha_acesso;
+        this.email = email;
+        this.cpf = cpf;
+    }
+
+    
+
+    public String getFuncao() {
+        return funcao;
+    }
+
+    public void setFuncao(String funcao) {
+        this.funcao = funcao;
     }
     
     public String getSetor() {

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemaatendcgae.controller.FXMLTelaAtualizarServidorController">
+    <stylesheets>
+        <URL value="@/sistemaatendcgae/css/fxmltelaatualizarservidor.css" />
+    </stylesheets>
+   <children>
+      <Pane fx:id="pnTitulo" maxHeight="250.0" maxWidth="1500.0" minHeight="250.0" minWidth="850.0" prefHeight="250.0" prefWidth="1500.0" style="-fx-background-color: #008633;">
+         <children>
+            <Label layoutX="510.0" layoutY="29.0" text="Cadastro de Servidores do CGAE" textFill="#fcf7f7">
+               <font>
+                  <Font name="Cambria Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <AnchorPane fx:id="apTabCad" layoutX="210.0" layoutY="160.0" prefHeight="600.0" prefWidth="1100.0" style="-fx-background-color: #ffffff; -fx-background-radius: 20px;">
+         <children>
+            <Button fx:id="btnSalvar" layoutX="277.0" layoutY="469.0" mnemonicParsing="false" onAction="#salvarCadastro" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: #008633;" text="Salvar" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnLimpar" layoutX="496.0" layoutY="469.0" mnemonicParsing="false" onAction="#limparCampos" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: #ab0000;" text="Limpar" textFill="#fcfafa">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <JFXTextField fx:id="cmpMatricula" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="85.0" prefHeight="39.0" prefWidth="320.0" promptText="Matrícula">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="cmpNome" focusColor="#008633" labelFloat="true" layoutX="496.0" layoutY="85.0" prefHeight="39.0" prefWidth="320.0" promptText="Nome">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="cmpCpf" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="155.0" prefHeight="39.0" prefWidth="320.0" promptText="Cpf">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="cmpEmail" focusColor="#008633" labelFloat="true" layoutX="496.0" layoutY="155.0" prefHeight="39.0" prefWidth="320.0" promptText="E-mail">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="cmpFone" focusColor="#008633" labelFloat="true" layoutX="98.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Telefone">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <JFXTextField fx:id="cmpSetor" focusColor="#008633" labelFloat="true" layoutX="496.0" layoutY="223.0" prefHeight="39.0" prefWidth="320.0" promptText="Setor">
+               <font>
+                  <Font name="MS UI Gothic" size="20.0" />
+               </font>
+            </JFXTextField>
+            <Label fx:id="lb1" layoutX="418.0" layoutY="78.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb3" layoutX="418.0" layoutY="148.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb5" layoutX="418.0" layoutY="216.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb8" layoutX="418.0" layoutY="274.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb2" layoutX="816.0" layoutY="78.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb4" layoutX="816.0" layoutY="148.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb6" layoutX="816.0" layoutY="216.0" prefHeight="33.0" prefWidth="30.0" text="X" textFill="#dd270b" visible="false">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnVoltar" layoutX="922.0" layoutY="14.0" mnemonicParsing="false" onAction="#voltarSistema" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: #ab0000;" text="Voltar" textFill="#fcfafa">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <JFXComboBox fx:id="cmbBoxFuncao" layoutX="98.0" layoutY="294.0" prefHeight="31.0" prefWidth="320.0" promptText="Selecione a funçao" unFocusColor="#008633" />
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="58.32" radius="28.66" spread="0.52" width="58.32" />
+         </effect>
+      </AnchorPane>
+   </children>
+</AnchorPane>

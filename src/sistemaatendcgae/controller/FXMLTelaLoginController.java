@@ -5,6 +5,7 @@
  */
 package sistemaatendcgae.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -29,6 +30,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -53,13 +55,19 @@ public class FXMLTelaLoginController implements Initializable {
     private JFXPasswordField cmpSenha;
     @FXML
     private Button btnTrocaSenha;
-
+    @FXML
+    private JFXButton btnVisualizarKey;
+    
+    public boolean v = false;
+    @FXML
+    private JFXTextField cmpMostarSenha;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        
     }    
 
     public static int getUserLogado() {
@@ -151,7 +159,7 @@ public class FXMLTelaLoginController implements Initializable {
                 labelLSincorreto.setVisible(false);
                 Main.getStage().close();
                 Stage stage = new Stage();
-                Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaServidorCgae.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaServidor.fxml"));
                 Scene scene = new Scene(root);
                 Main.setStage(stage);
                 stage.initStyle(StageStyle.UNDECORATED);
@@ -175,8 +183,27 @@ public class FXMLTelaLoginController implements Initializable {
         if(event.getCode() == KeyCode.ENTER){ 
             logarnoSistema();
         }
-        
+        else if(event.getCode() == KeyCode.F10){
+                
+                //logarnoSistema();
+                //JOptionPane.showMessageDialog(null, "Deu certo");
+            try {
+                Main.getStage().close();
+                Stage stage = new Stage();
+                Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaCadastroServidor.fxml"));
+                Scene scene = new Scene(root);
+                Main.setStage(stage);
+                stage.initStyle(StageStyle.UNDECORATED);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                Logger.getLogger(FXMLTelaPrincipalController.class.getName()).log(Level.SEVERE, null, e);
+            }
+            
+        }
     }
+    
+    
 
     @FXML
     private void trocarSenha(ActionEvent event) throws IOException {
@@ -193,6 +220,24 @@ public class FXMLTelaLoginController implements Initializable {
             Logger.getLogger(FXMLTelaPrincipalController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
+    @FXML
+    private void visualizarKey(ActionEvent event) {
+        String vizualizar = cmpSenha.getText();
+        cmpMostarSenha.setText(vizualizar);
+        if(v==false){
+            cmpMostarSenha.setVisible(true);
+            cmpSenha.setVisible(false);
+            v=true;
+        }else{
+            cmpMostarSenha.setVisible(false);
+            cmpSenha.setVisible(true);
+            v=false;
+        }
+    }
+
+    
+    
 
     
     

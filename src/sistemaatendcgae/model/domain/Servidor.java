@@ -37,14 +37,14 @@ public class Servidor {
         this.funcao = funcao;
     }
 
-    public Servidor(int matricula, String nome, String senha_acesso, String email, String telefone, String cpf, String setor) {
+    public Servidor(int matricula, String nome, String email, String telefone, String cpf, String setor, String funcao) {
         this.matricula = matricula;
         this.nome = nome;
-        this.senha_acesso = senha_acesso;
         this.email = email;
         this.telefone = telefone;
         this.cpf = cpf;
         this.setor = setor;
+        this.funcao = funcao;
     }
 
     public Servidor(int matricula, String senha_acesso, String email, String cpf) {
@@ -54,6 +54,14 @@ public class Servidor {
         this.cpf = cpf;
     }
 
+    public Servidor(int matricula) {
+        this.matricula = matricula;
+    }
+
+    public Servidor() {
+    }
+
+    
     
 
     public String getFuncao() {

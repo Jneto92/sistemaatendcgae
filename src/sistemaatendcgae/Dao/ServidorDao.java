@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -21,6 +23,7 @@ import sistemaatendcgae.model.domain.Servidor;
 import sistemaatendcgae.controller.FXMLTelaLoginController;
 import static sistemaatendcgae.controller.FXMLTelaLoginController.userLogado;
 import sistemaatendcgae.controller.FXMLTelaServidorCgaeController;
+import sistemaatendcgae.model.domain.Atendimento;
 import sistemaatendcgae.model.domain.Main;
 
 /**
@@ -57,6 +60,50 @@ public class ServidorDao {
             System.out.println(e.getMessage());
         }
     }
+    
+    public void updateServidor(Servidor serv){
+        String sql = "UPDATE tabela_servidor SET matricula=?, email=?, cpf=?, telefone=?, setor=?, funcao=? WHERE nome=?";
+        //String sql = "INSERT INTO tabela_servidor(matricula, nome, email, cpf, telefone, setor, funcao) VALUES(?, ?, ?, ?, ?, ?, ?)";
+        System.out.println(serv.getFuncao());
+        try {
+            Connection conn = this.conectar();
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, serv.getMatricula());
+            pstmt.setString(2, serv.getEmail());
+            pstmt.setString(3, serv.getCpf());
+            pstmt.setString(4, serv.getTelefone());
+            pstmt.setString(5, serv.getSetor());
+            pstmt.setString(6, serv.getFuncao());
+            pstmt.setString(7, serv.getNome());
+            
+            pstmt.executeUpdate();
+            pstmt.close();
+            System.out.println("Registros atualizados");
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
+    public void deletarServidor(Servidor serv){
+        String sql = "DELETE FROM tabela_servidor WHERE matricula=?";
+        try {
+            Connection conn = this.conectar();
+            
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, serv.getMatricula());
+            
+            
+            pstmt.executeUpdate();
+            pstmt.close();
+            System.out.println("Registros deletados");
+            
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     public boolean procurarServ(Servidor sv){
         String sql = "SELECT * FROM tabela_servidor WHERE matricula=? and email=? and cpf=?";
         boolean retorno = false;
@@ -106,6 +153,33 @@ public class ServidorDao {
             JOptionPane.showMessageDialog(null, "Campos digitados não conferem!");
         }
         pstmt.close();
+    }
+    
+    public List<Servidor> lista(){
+        String sql = "SELECT * FROM tabela_servidor";
+        List<Servidor> retorno = new ArrayList<>();
+        try {
+            Connection conn = this.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet resultado = stmt.executeQuery();
+            while(resultado.next()){
+                Servidor sv = new Servidor();
+                sv.setMatricula(resultado.getInt("matricula"));
+                sv.setNome(resultado.getString("nome"));
+                sv.setEmail(resultado.getString("email"));
+                sv.setFuncao(resultado.getString("funcao"));
+                
+                
+                //System.out.println(sv.getEmail());
+                
+                retorno.add(sv);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        
+        return retorno;
     }
     
     private Connection conectar(){ 

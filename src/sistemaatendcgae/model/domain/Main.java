@@ -34,6 +34,19 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        
+        LocalDateTime agora = LocalDateTime.now();
+
+        // formatar a data
+        DateTimeFormatter formatterData = DateTimeFormatter.ofPattern("uuMMdd");
+        String dataFormatada = formatterData.format(agora);
+
+        // formatar a hora
+        DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HHmmss");
+        String horaFormatada = formatterHora.format(agora);
+        System.out.println(dataFormatada+""+horaFormatada);
+        
+        
         Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaPrincipal2.fxml"));
         
         Scene scene = new Scene(root);
@@ -57,6 +70,8 @@ public class Main extends Application {
         conn.conectar();
         CriarTabelaDao pub = new CriarTabelaDao();
         Arquivos a = new Arquivos();
+        System.out.println(System.getProperty("user.home"));
+        
         //pub.tabelaPublico();
         //pub.tabelaServidor();
         //pub.tabelaAtendimento();

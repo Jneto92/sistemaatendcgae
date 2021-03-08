@@ -5,6 +5,7 @@
  */
 package sistemaatendcgae.controller;
 
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import java.io.IOException;
@@ -83,7 +84,11 @@ public class FXMLTelaCadastroServidorController implements Initializable {
     private JFXTextField cmpFuncao;
     @FXML
     private Label lb9;
-
+    @FXML
+    private Button btnVoltar;
+    @FXML
+    private JFXComboBox<String> cmbBoxFuncao;
+    public boolean normal = false;
     /**
      * Initializes the controller class.
      */
@@ -93,13 +98,16 @@ public class FXMLTelaCadastroServidorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        cmbBoxFuncao.getItems().addAll("Admin", "Servidor");
     } 
 
+    
+    
     @FXML
     private void salvarCadastro(ActionEvent event) {
         if(cmpMatricula.getText().isEmpty() || cmpNome.getText().isEmpty() || cmpEmail.getText().isEmpty() || cmpSenha.getText().isEmpty() || cmpCsenha.getText().isEmpty()
-                || cmpFone.getText().isEmpty() || cmpSetor.getText().isEmpty() || cmpCpf.getText().isEmpty() || cmpFuncao.getText().isEmpty()){
-            
+                || cmpFone.getText().isEmpty() || cmpSetor.getText().isEmpty() || cmpCpf.getText().isEmpty() || cmbBoxFuncao.getValue()==null){
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             if(cmpMatricula.getText().isEmpty()){
                 lb1.setVisible(true);
             }else{
@@ -140,7 +148,7 @@ public class FXMLTelaCadastroServidorController implements Initializable {
             }else{
                 lb6.setVisible(false);
             }
-            if(cmpFuncao.getText().isEmpty()){
+            if(cmbBoxFuncao.getValue()==null){
                 lb8.setVisible(true);
             }else{
                 lb8.setVisible(false);
@@ -154,7 +162,7 @@ public class FXMLTelaCadastroServidorController implements Initializable {
             String senha = cmpSenha.getText();
             String fone = cmpFone.getText();
             String setor = cmpSetor.getText();
-            String funcao = cmpFuncao.getText();
+            String funcao = cmbBoxFuncao.getValue();
             Servidor serv = new Servidor(matricula, nome, email, cpf, senha, fone, setor, funcao);
             ServidorDao dao = new ServidorDao();
             dao.registrarServidor(serv);
@@ -167,8 +175,6 @@ public class FXMLTelaCadastroServidorController implements Initializable {
 
     @FXML
     private void limparCampos(ActionEvent event) {
-        
-
         limparCampo();
         
     }
@@ -191,8 +197,29 @@ public class FXMLTelaCadastroServidorController implements Initializable {
         cmpCsenha.setText("");
         cmpFone.setText("");
         cmpSetor.setText("");
-        cmpFuncao.setText("");
+        cmbBoxFuncao.setValue(null);
     }
+    
+     @FXML
+    private void voltarSistema(ActionEvent event) throws IOException {
+        
+        
+            Main.getStage().close();
+            Stage stage = new Stage();
+            Parent root = FXMLLoader.load(getClass().getResource("/sistemaatendcgae/view/FXMLTelaSistema.fxml"));
+            Scene scene = new Scene(root);
+            Main.setStage(stage);
+            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setScene(scene);
+            stage.show();
+        
+            
+        
+       
+    }
+    
+    
+    
 
     public Pane getPnTitulo() {
         return pnTitulo;
@@ -353,6 +380,16 @@ public class FXMLTelaCadastroServidorController implements Initializable {
     public void setLb6(Label lb6) {
         this.lb6 = lb6;
     }
+
+    public boolean isNormal() {
+        return normal;
+    }
+
+    public void setNormal(boolean normal) {
+        this.normal = normal;
+    }
+
+   
 
     
     

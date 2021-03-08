@@ -78,6 +78,8 @@ public class FXMLTelaPublicoController implements Initializable {
         
         // TODO
         selecionarTipo.getItems().addAll("Monitoria", "Auxilios", "Pincel", "Psicologa", "outros");
+        System.out.println(selecionarTipo.getValue());
+        
         
     }    
     
@@ -102,7 +104,7 @@ public class FXMLTelaPublicoController implements Initializable {
         Date data = new Date(format.parse(dataFormatada).getTime());
         //System.out.println(data);
         
-        if(campoCpf.getText().isEmpty() || campoNome.getText().isEmpty() || campoEmail.getText().isEmpty()){
+        if(campoCpf.getText().isEmpty() || campoNome.getText().isEmpty() || campoEmail.getText().isEmpty() || selecionarTipo.getValue()==null){
             JOptionPane.showMessageDialog(null, "Preencha todos os campos");
             if(campoCpf.getText().isEmpty()){
                 campoObg1.setVisible(true);
@@ -120,6 +122,10 @@ public class FXMLTelaPublicoController implements Initializable {
                 campoObg3.setVisible(false);
             }    
         }else{
+            
+            
+            
+            
             
             String cpf = campoCpf.getText();
             String nome = campoNome.getText();
@@ -147,7 +153,7 @@ public class FXMLTelaPublicoController implements Initializable {
         campoCpf.setText("");
         campoNome.setText("");
         campoEmail.setText("");
-        selecionarTipo.setValue("Escolha um opção ");
+        selecionarTipo.setValue(null);
         campoObg1.setVisible(false);
         campoObg2.setVisible(false);
         campoObg3.setVisible(false);

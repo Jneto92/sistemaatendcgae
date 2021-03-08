@@ -38,7 +38,21 @@ public class Atendimento {
         this.servidor = nomeServ;
         this.observacao = observacoes;
     }
+    //construtor para deletar atendimento
 
+    public Atendimento(int senha_atendimento) {
+        this.senha_atendimento = senha_atendimento;
+    }
+    
+    //construtor para o encaminhamento do atendimento
+    public Atendimento(int senha_atendimento, String data_atendimento, String hora_atendimento, String status, String tipoAtendimento) {
+        this.senha_atendimento = senha_atendimento;
+        this.data_atendimento = data_atendimento;
+        this.hora_atendimento = hora_atendimento;
+        this.status = status;
+        this.tipoAtendimento = tipoAtendimento;
+    }
+    
     //Construtor para a solicitação de atendimento feito pelo publico
     public Atendimento(String nome, String email, String status, String tipo, String data_solicitacao,String hora_solicitacao) {
         
@@ -56,7 +70,15 @@ public class Atendimento {
         this.hora_atendimento = hora_atendimento;
         this.status = status;
     }
-
+    //novo construtor para atender a solicitação
+    public Atendimento(int senha_atendimento, String data_atendimento, String hora_atendimento, String status, int matriculaServ) {
+        this.senha_atendimento = senha_atendimento;
+        this.data_atendimento = data_atendimento;
+        this.hora_atendimento = hora_atendimento;
+        this.status = status;
+        this.matriculaServ = matriculaServ;
+    }
+    
     public Atendimento(int senha_atendimento, String data_solicitacao, String hora_solicitacao, String data_atendimento, String hora_atendimento, String data_encerramento, String hora_encerramento, String status, String nome, String email, String servidor, int matriculaServ, String tipoAtendimento, String observacao) {
         this.senha_atendimento = senha_atendimento;
         this.data_solicitacao = data_solicitacao;
@@ -192,6 +214,11 @@ public class Atendimento {
 
     public void setSenha_atendimento(int senha_atendimento) {
         this.senha_atendimento = senha_atendimento;
+    }
+
+    @Override
+    public String toString() {
+        return "Atendimento{" + "senha_atendimento=" + senha_atendimento + ", data_solicitacao=" + data_solicitacao + ", hora_solicitacao=" + hora_solicitacao + ", data_atendimento=" + data_atendimento + ", hora_atendimento=" + hora_atendimento + ", data_encerramento=" + data_encerramento + ", hora_encerramento=" + hora_encerramento + ", status=" + status + ", nome=" + nome + ", email=" + email + ", servidor=" + servidor + ", matriculaServ=" + matriculaServ + ", tipoAtendimento=" + tipoAtendimento + ", observacao=" + observacao + '}';
     }
 
     

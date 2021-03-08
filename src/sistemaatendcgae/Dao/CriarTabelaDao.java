@@ -147,4 +147,49 @@ public class CriarTabelaDao {
             System.err.println(e.getMessage());
         }
     }
+    public void deletarTbAtendimento(){
+        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String sql = "DROP TABLE IF EXISTS tabela_atendimento";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            //intanciar o stantement
+            Statement  stmt = conn.createStatement();
+            //Criar nova tabela
+            stmt.execute(sql);
+            stmt.close();
+            System.out.println("Tabela deletada");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    public void deletarTbServidor(){
+        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String sql = "DROP TABLE IF EXISTS tabela_servidor";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            //intanciar o stantement
+            Statement  stmt = conn.createStatement();
+            //Criar nova tabela
+            stmt.execute(sql);
+            stmt.close();
+            System.out.println("Tabela deletada");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+    public void deletarTbPublico(){
+        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String sql = "DROP TABLE IF EXISTS tabela_publico";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            //intanciar o stantement
+            Statement  stmt = conn.createStatement();
+            //Criar nova tabela
+            stmt.execute(sql);
+            stmt.close();
+            System.out.println("Tabela deletada");
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 }

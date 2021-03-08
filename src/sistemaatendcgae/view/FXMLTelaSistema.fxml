@@ -11,7 +11,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="sistemaatendcgae.controller.FXMLTelaSistemaController">
+<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaatendcgae.controller.FXMLTelaSistemaController">
     <stylesheets>
         <URL value="@/sistemaatendcgae/css/fxmltelasistema.css" />
     </stylesheets>
@@ -27,7 +27,7 @@
       </Pane>
       <AnchorPane layoutX="110.0" layoutY="160.0" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
          <children>
-            <Button fx:id="btnLogout" layoutX="1066.0" layoutY="31.0" mnemonicParsing="false" onAction="#deslogarSistema" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Voltar" textFill="#eeeeee">
+            <Button fx:id="btnVoltar" layoutX="1145.0" layoutY="15.0" mnemonicParsing="false" onAction="#sairSistema" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Voltar" textFill="#eeeeee">
                <effect>
                   <DropShadow />
                </effect>
@@ -35,7 +35,7 @@
                   <Font name="Cambria Bold" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btnGerarRel1" layoutX="725.0" layoutY="622.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Atualizar Servidor" textFill="#eeeeee">
+            <Button fx:id="btnUpdateSv" layoutX="585.0" layoutY="46.0" mnemonicParsing="false" onAction="#updateServidor" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #30f;" text="Atualizar" textFill="#eeeeee">
                <effect>
                   <DropShadow />
                </effect>
@@ -43,7 +43,7 @@
                   <Font name="Cambria Bold" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btnAddServidor" layoutX="454.0" layoutY="622.0" mnemonicParsing="false" onAction="#adcServidor" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Adicionar servidor" textFill="#eeeeee">
+            <Button fx:id="btnAddServidor" layoutX="322.0" layoutY="46.0" mnemonicParsing="false" onAction="#adcServidor" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Adicionar" textFill="#eeeeee">
                <effect>
                   <DropShadow />
                </effect>
@@ -51,20 +51,89 @@
                   <Font name="Cambria Bold" size="24.0" />
                </font>
             </Button>
-            <Button fx:id="btnGerarRel" layoutX="173.0" layoutY="622.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: #008633;" text="Gerar relatório" textFill="#eeeeee">
-               <effect>
-                  <DropShadow />
-               </effect>
-               <font>
-                  <Font name="Cambria Bold" size="24.0" />
-               </font>
-            </Button>
-            <TableView layoutX="235.0" layoutY="171.0" prefHeight="249.0" prefWidth="965.0">
+            <TableView fx:id="tbServidor" layoutX="322.0" layoutY="122.0" prefHeight="249.0" prefWidth="838.0">
               <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
+                <TableColumn fx:id="colMatricula" prefWidth="169.0" text="Matrícula" />
+                <TableColumn fx:id="colNome" minWidth="0.0" prefWidth="238.0" text="Nome" />
+                  <TableColumn fx:id="colEmail" prefWidth="285.0" text="E-mail" />
+                  <TableColumn fx:id="colFuncao" prefWidth="141.0" text="Função" />
               </columns>
             </TableView>
+            <Button fx:id="btnListaServidor" layoutX="27.0" layoutY="122.0" mnemonicParsing="false" onAction="#gerarListaServidor" prefHeight="63.0" prefWidth="268.0" style="-fx-background-color: #008633;" text="Listar de Servidores" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnDeletarServ" layoutX="851.0" layoutY="46.0" mnemonicParsing="false" onAction="#deletarServ" prefHeight="63.0" prefWidth="245.0" style="-fx-background-color: ab0000;" text="Deletar" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnResetarTbAt" layoutX="161.0" layoutY="723.0" mnemonicParsing="false" onAction="#resetarAtendimentos" prefHeight="63.0" prefWidth="420.0" style="-fx-background-color: ab0000;" text="Resetar tabela de atendimentos" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnResetarSist" layoutX="707.0" layoutY="723.0" mnemonicParsing="false" onAction="#resetarSistema" prefHeight="63.0" prefWidth="420.0" style="-fx-background-color: ab0000;" text="Resetar sistema" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnListaAtendimento" layoutX="21.0" layoutY="441.0" mnemonicParsing="false" onAction="#gerarListaAtendimento" prefHeight="63.0" prefWidth="268.0" style="-fx-background-color: #008633;" text="Lista de Atendimentos" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="22.0" />
+               </font>
+            </Button>
+            <TableView fx:id="tbAtendimento" layoutX="322.0" layoutY="441.0" prefHeight="249.0" prefWidth="977.0">
+               <columns>
+                  <TableColumn fx:id="colSenha" prefWidth="140.0" text="Senha" />
+                  <TableColumn fx:id="colNomeAt" minWidth="0.0" prefWidth="267.0" text="Nome" />
+                  <TableColumn fx:id="colEmailAt" prefWidth="285.0" text="E-mail" />
+                  <TableColumn fx:id="colTipo" prefWidth="141.0" text="Tipo" />
+                  <TableColumn fx:id="colStatus" prefWidth="133.0" text="Status" />
+               </columns>
+            </TableView>
+            <TableView fx:id="tbServidor2" layoutX="342.0" layoutY="110.0" prefHeight="249.0" prefWidth="838.0" visible="false">
+               <columns>
+                  <TableColumn fx:id="colMatricula2" prefWidth="169.0" text="Matrícula" />
+                  <TableColumn fx:id="colNome2" minWidth="0.0" prefWidth="238.0" text="Nome" />
+                  <TableColumn fx:id="colEmail2" prefWidth="285.0" text="E-mail" />
+                  <TableColumn fx:id="colFuncao2" prefWidth="141.0" text="Função" />
+               </columns>
+            </TableView>
+            <Label layoutX="648.0" layoutY="412.0" text="Lista completa de Atendimentos">
+               <font>
+                  <Font name="Lucida Sans Typewriter Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="556.0" layoutY="14.0" text="Lista completa de Servidores">
+               <font>
+                  <Font name="Lucida Sans Typewriter Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnMudarStatus" layoutX="21.0" layoutY="534.0" mnemonicParsing="false" onAction="#mudarStatusAtendimento" prefHeight="63.0" prefWidth="268.0" style="-fx-background-color: #000;" text="Mudar Status" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="22.0" />
+               </font>
+            </Button>
          </children>
          <effect>
             <DropShadow height="80.09" radius="39.545" spread="0.51" width="80.09" />

@@ -77,7 +77,7 @@
                            </font>
                         </Label>
                         <Label prefHeight="17.0" prefWidth="178.0" />
-                        <ComboBox fx:id="selecionarTipo" prefHeight="36.0" prefWidth="280.0">
+                        <ComboBox fx:id="selecionarTipo" prefHeight="36.0" prefWidth="280.0" promptText="Selecione o tipo">
                            <effect>
                               <InnerShadow color="#008633" />
                            </effect>

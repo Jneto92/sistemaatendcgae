@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" maxHeight="1000.0" maxWidth="1500.0" minHeight="1000.0" minWidth="1500.0" prefHeight="1000.0" prefWidth="1500.0" style="-fx-background-color: white;" stylesheets="@../css/fxmlTelaServidor.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sistemaatendcgae.controller.FXMLTelaServidorCgaeController">
+    <children>
+      <Pane layoutX="-2.0" layoutY="-3.0" maxHeight="223.0" minHeight="102.0" minWidth="1500.0" prefHeight="223.0" prefWidth="1500.0" style="-fx-background-color: #008633;" styleClass="tab" stylesheets="@../css/fxmltelacadastroservidor.css">
+         <children>
+            <Label layoutX="375.0" layoutY="29.0" text="Coordenação Geral de Assistência estudantil" textFill="#fcf7f7">
+               <font>
+                  <Font name="Cambria Bold" size="36.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <JFXTabPane layoutX="283.0" layoutY="361.0" />
+      <AnchorPane layoutX="100.0" layoutY="150.0" prefHeight="800.0" prefWidth="1300.0" style="-fx-background-color: #fff; -fx-background-radius: 10px;">
+         <effect>
+            <DropShadow height="80.09" radius="39.545" spread="0.51" width="80.09" />
+         </effect>
+         <children>
+            <JFXTabPane fx:id="tabPane1" layoutX="67.0" layoutY="100.0" prefHeight="655.0" prefWidth="1152.0" style="-fx-background-color: #e2e2e2;">
+               <tabs>
+                  <Tab fx:id="tabPerfil" onSelectionChanged="#mostrarPerfil" text="Perfil do Servidor">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #e5e5e5;">
+                           <children>
+                              <Pane layoutX="29.0" layoutY="44.0" prefHeight="418.0" prefWidth="1089.0" style="-fx-border-color: black; -fx-background-color: #fff;">
+                                 <children>
+                                    <Label fx:id="lbMatricula" layoutX="30.0" layoutY="35.0" text="Matrícula" />
+                                    <JFXTextField fx:id="cmpMatricula" editable="false" layoutX="30.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextField fx:id="cmpNome" editable="false" layoutX="370.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula1" layoutX="370.0" layoutY="35.0" text="Nome" />
+                                    <JFXTextField fx:id="cmpEmail" editable="false" layoutX="687.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula11" layoutX="687.0" layoutY="35.0" text="E-mail" />
+                                    <Label fx:id="lbMatricula111" layoutX="30.0" layoutY="110.0" text="Telefone" />
+                                    <JFXTextField fx:id="cmpTelefone" editable="false" layoutX="30.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula1111" layoutX="370.0" layoutY="110.0" text="Setor" />
+                                    <JFXTextField fx:id="cmpSetor" editable="false" layoutX="370.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXPasswordField fx:id="novaSenha" layoutX="61.0" layoutY="294.0" promptText="Nova senha" style="-fx-background-color: #ddd;" styleClass="mainFxmlClass" stylesheets="@../css/fxmltelacadastroservidor.css" />
+                                    <JFXTextField fx:id="cmpFuncao" editable="false" layoutX="687.0" layoutY="131.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula112" layoutX="687.0" layoutY="110.0" text="Função" />
+                                    <Button fx:id="btnSistema" layoutX="536.0" layoutY="360.0" mnemonicParsing="false" onAction="#acesssarSistema" prefHeight="44.0" prefWidth="254.0" style="-fx-background-color: ab0000;" text="Acesso ao Sistema" textFill="#eeeeee">
+                                       <effect>
+                                          <DropShadow />
+                                       </effect>
+                                       <font>
+                                          <Font name="Cambria Bold" size="18.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                              </Pane>
+                              <Button fx:id="btnAltSenha" layoutX="114.0" layoutY="400.0" mnemonicParsing="false" onAction="#alterarSenha" prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Alterar senha" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="18.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#carregarLista" text="Lista de Atendimentos">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tabelaAtendimento" layoutX="43.0" layoutY="147.0" prefHeight="200.0" prefWidth="1071.0">
+                                <columns>
+                                  <TableColumn fx:id="colSenha" prefWidth="152.0" text="Senha" />
+                                  <TableColumn fx:id="colNome" prefWidth="385.0" text="Nome" />
+                                    <TableColumn fx:id="colEmail" minWidth="0.0" prefWidth="210.0" text="E-mail" />
+                                    <TableColumn fx:id="colTipo" prefWidth="201.0" text="Tipo" />
+                                    <TableColumn fx:id="colStatus" prefWidth="118.0" text="Status" />
+                                </columns>
+                              </TableView>
+                              <Button fx:id="btnLogout1" layoutX="87.0" layoutY="446.0" mnemonicParsing="false" onAction="#atualizarLista" prefHeight="63.0" prefWidth="203.0" style="-fx-background-color: #008633;" text="Atualizar" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnLogout11" layoutX="346.0" layoutY="446.0" mnemonicParsing="false" onAction="#atenderSenha" prefHeight="63.0" prefWidth="203.0" style="-fx-background-color: #30f;" text="Atender" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Label layoutX="43.0" layoutY="37.0" text="Pesquisar por:">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="cmbBoxPesquisa" layoutX="172.0" layoutY="33.0" onAction="#escolhaPesquisa" prefHeight="31.0" prefWidth="218.0" promptText="Escolha uma opção" style="-fx-background-color: #fff;" unFocusColor="#008633" />
+                              <JFXComboBox fx:id="cmbBoxEscolha" layoutX="417.0" layoutY="33.0" prefHeight="31.0" prefWidth="250.0" promptText="Escolha uma opção" style="-fx-background-color: #fff;" unFocusColor="#008633" visible="false" />
+                              <JFXTextField fx:id="jtfPesquisaNome" layoutX="424.0" layoutY="33.0" prefHeight="31.0" prefWidth="250.0" promptText="Digite algo" style="-fx-background-color: #fff;" unFocusColor="#008633" visible="false" />
+                              <JFXComboBox fx:id="cmbBoxEscolha1" layoutX="427.0" layoutY="36.0" prefHeight="31.0" prefWidth="250.0" promptText="Escolha uma opção" style="-fx-background-color: #fff;" unFocusColor="#008633" visible="false" />
+                              <Button fx:id="btnPesquisaAt" layoutX="712.0" layoutY="26.0" mnemonicParsing="false" onAction="#pesquisarAt" prefHeight="46.0" prefWidth="168.0" style="-fx-background-color: #008633;" text="Pesquisar" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnDeletar" layoutX="607.0" layoutY="446.0" mnemonicParsing="false" onAction="#deletarAtendimento" prefHeight="63.0" prefWidth="210.0" style="-fx-background-color: ab0000;" text="Excluir" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#carregarAtendimento" text="Atendimento">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Pane layoutX="22.0" layoutY="59.0" prefHeight="375.0" prefWidth="1043.0" style="-fx-border-color: black; -fx-background-color: #fff;" AnchorPane.bottomAnchor="184.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="87.0" AnchorPane.topAnchor="59.0">
+                                 <children>
+                                    <Label fx:id="lbMatricula11" layoutX="30.0" layoutY="35.0" text="Senha" />
+                                    <JFXTextField fx:id="cmpSenhaAt" editable="false" layoutX="30.0" layoutY="56.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextField fx:id="cmpNomeAt" editable="false" layoutX="30.0" layoutY="191.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula111" layoutX="30.0" layoutY="170.0" text="Nome" />
+                                    <JFXTextField fx:id="cmpEmailAt" editable="false" layoutX="30.0" layoutY="260.0" prefHeight="31.0" prefWidth="290.0" style="-fx-background-color: #ddd;" />
+                                    <Label fx:id="lbMatricula1111" layoutX="30.0" layoutY="239.0" text="E-mail" />
+                                    <Label fx:id="lbMatricula11112" layoutX="30.0" layoutY="102.0" text="Tipo" />
+                                    <JFXTextField fx:id="cmpTipoAt" editable="false" layoutX="30.0" layoutY="123.0" prefHeight="31.0" prefWidth="291.0" style="-fx-background-color: #ddd;" />
+                                    <JFXTextArea fx:id="cmpObservacoesAt" layoutX="405.0" layoutY="38.0" promptText="Observações" style="-fx-border-color: #000;" />
+                                 </children>
+                              </Pane>
+                              <Button fx:id="btnEncerrarAt" layoutX="36.0" layoutY="453.0" mnemonicParsing="false" onAction="#encerrarAtendimento" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: #008633;" text="Encerrar Atendimento" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnCancelarAt" layoutX="387.0" layoutY="453.0" mnemonicParsing="false" onAction="#cancelarAtendimento" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: ab0000;" text="Cancelar Atendimento" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnEncaminharAt" layoutX="736.0" layoutY="453.0" mnemonicParsing="false" onAction="#encaminharAtendimento" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: #000;" text="Encaminhar Atendimento" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="btnEsperaAt" layoutX="387.0" layoutY="541.0" mnemonicParsing="false" onAction="#colocaremEspera" prefHeight="63.0" prefWidth="329.0" style="-fx-background-color: #30f;" text="Colocar em Espera" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab onSelectionChanged="#mostrarEncerrados" text="Atendimentos encerrados">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TableView fx:id="tabelaAtEncerrados" layoutX="7.0" layoutY="139.0" prefHeight="200.0" prefWidth="1141.0">
+                                 <columns>
+                                    <TableColumn fx:id="colSenha1" prefWidth="79.0" text="Senha" />
+                                    <TableColumn fx:id="colNome1" prefWidth="301.0" text="Nome" />
+                                    <TableColumn fx:id="colEmail1" minWidth="0.0" prefWidth="273.0" text="E-mail" />
+                                    <TableColumn fx:id="colServidor1" prefWidth="265.0" text="Servidor" />
+                                    <TableColumn fx:id="colTipo1" prefWidth="130.0" text="Tipo" />
+                                 </columns>
+                              </TableView>
+                              <Label layoutX="105.0" layoutY="37.0" text="Pesquisar por:">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="18.0" />
+                                 </font>
+                              </Label>
+                              <JFXComboBox fx:id="cmbBoxPesquisa1" layoutX="241.0" layoutY="33.0" onAction="#escolhaPesquisaEnc" prefHeight="31.0" prefWidth="218.0" promptText="Escolha uma opção" style="-fx-background-color: #fff;" unFocusColor="#008633" />
+                              <Button fx:id="btnPesquisaAt1" layoutX="786.0" layoutY="26.0" mnemonicParsing="false" onAction="#pesquisarAtEnc" prefHeight="46.0" prefWidth="168.0" style="-fx-background-color: #008633;" text="Pesquisar" textFill="#eeeeee">
+                                 <effect>
+                                    <DropShadow />
+                                 </effect>
+                                 <font>
+                                    <Font name="Cambria Bold" size="24.0" />
+                                 </font>
+                              </Button>
+                              <JFXComboBox fx:id="cmbBoxPesquisaEnc" layoutX="484.0" layoutY="33.0" prefHeight="31.0" prefWidth="218.0" promptText="Escolha uma opção" style="-fx-background-color: #fff;" unFocusColor="#008633" visible="false" />
+                              <JFXTextField fx:id="txfPesqEnc" layoutX="485.0" layoutY="33.0" prefHeight="31.0" prefWidth="217.0" promptText="Digite algo" unFocusColor="#008633" visible="false" />
+                           </children>
+                        </AnchorPane>
+                    </content>
+                  </Tab>
+               </tabs>
+            </JFXTabPane>
+            <ImageView fitHeight="80.0" fitWidth="91.0" layoutX="100.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icone/user.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnLogout" layoutX="1066.0" layoutY="31.0" mnemonicParsing="false" onAction="#deslogarSistema" prefHeight="63.0" prefWidth="141.0" style="-fx-background-color: ab0000;" text="Logout" textFill="#eeeeee">
+               <effect>
+                  <DropShadow />
+               </effect>
+               <font>
+                  <Font name="Cambria Bold" size="24.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

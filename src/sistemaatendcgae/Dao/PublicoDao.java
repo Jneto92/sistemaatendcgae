@@ -46,10 +46,10 @@ public class PublicoDao {
             
             pstmt.executeUpdate();
             pstmt.close();
-            System.out.println("Registros inseridos");
+            //System.out.println("Registros inseridos");
             
         } catch (SQLException e) {
-            System.out.println("Usuário já está no banco");
+            //System.out.println("Usuário já está no banco");
         }
         
         
@@ -78,11 +78,11 @@ public class PublicoDao {
     
     
     private Connection conectar(){ 
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         conn = null;
         
         try {
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, "user", "123456");
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());

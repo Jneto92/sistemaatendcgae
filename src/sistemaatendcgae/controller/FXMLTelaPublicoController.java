@@ -135,7 +135,7 @@ public class FXMLTelaPublicoController implements Initializable {
             Publico pub = new Publico(cpf, nome, email);
             PublicoDao dao = new PublicoDao();
             dao.solicitarAtendimento(pub);
-            Atendimento at = new Atendimento(nome, email, status, tipo, dataFormatada, horaFormatada);
+            Atendimento at = new Atendimento(cpf, email, status, tipo, dataFormatada, horaFormatada);
             AtendimentoDao aDao = new AtendimentoDao();
             aDao.solicitarAtendimento(at);
             JOptionPane.showMessageDialog(null, "Registro feito com sucesso");

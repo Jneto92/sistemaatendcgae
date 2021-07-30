@@ -41,22 +41,22 @@ public class AtendimentoDao {
         
         
         
-        String sql = "INSERT INTO tabela_atendimento(fk_publico_nome, fk_publico_email, tipoAtendimento, status, data_solicitacao, hora_solicitacao) VALUES(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tabela_atendimento(fk_publico_nome, tipoAtendimento, status, data_solicitacao, hora_solicitacao) VALUES(?, ?, ?, ?, ?)";
         try {
             conn = this.conectar();
             
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, at.getNome());
-            pstmt.setString(2, at.getEmail());
-            pstmt.setString(3, at.getTipoAtendimento());
-            pstmt.setString(4, at.getStatus());
-            pstmt.setString(5, at.getData_solicitacao());
-            pstmt.setString(6, at.getHora_solicitacao());
+            //pstmt.setString(2, at.getEmail());
+            pstmt.setString(2, at.getTipoAtendimento());
+            pstmt.setString(3, at.getStatus());
+            pstmt.setString(4, at.getData_solicitacao());
+            pstmt.setString(5, at.getHora_solicitacao());
             
             
             pstmt.executeUpdate();
             pstmt.close();
-            System.out.println("Registros inseridos");
+            //System.out.println("Registros inseridos");
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -80,10 +80,10 @@ public class AtendimentoDao {
 
                 pstmt.executeUpdate();
                 pstmt.close();
-                System.out.println("Registros atualizados");
+                //System.out.println("Registros atualizados");
 
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
             }
         }else if(op==2){
             String sql = "UPDATE tabela_atendimento SET status=?, data_atendimento=?, hora_atendimento=?, fk_servidor_matricula=? WHERE senha_atendimento=?";
@@ -101,10 +101,10 @@ public class AtendimentoDao {
 
                 pstmt.executeUpdate();
                 pstmt.close();
-                System.out.println("Registros atualizados");
+                //System.out.println("Registros atualizados");
 
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
             }
         }
         else{
@@ -123,10 +123,10 @@ public class AtendimentoDao {
 
                 pstmt.executeUpdate();
                 pstmt.close();
-                System.out.println("Registros atualizados");
+                //System.out.println("Registros atualizados");
 
             } catch (SQLException e) {
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
             }
         }
         
@@ -151,27 +151,27 @@ public class AtendimentoDao {
             
             pstmt.executeUpdate();
             pstmt.close();
-            System.out.println("Registros atualizados");
+            //System.out.println("Registros atualizados");
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     };
     public List<Atendimento> listaPesq(String ate, int n){
         List<Atendimento> retorno = new ArrayList<>();
-        if(n==0){
-            String sql = "SELECT * FROM tabela_atendimento WHERE fk_publico_nome='"+ate+"' and (status='Ausente' or status='Na fila')";
+        if(n==0){//atendimento na fila ou ausente por nome do publico
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE tabela_publico.nome='"+ate+"' and (status='Ausente' or status='Na fila') and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             
             try {
-                Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet resultado = stmt.executeQuery(sql);
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setStatus(resultado.getString("status"));
 
 
@@ -181,21 +181,21 @@ public class AtendimentoDao {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else if(n==1){
+        }else if(n==1){//atendimentos na fila ou ausente por status
             
-            String sql = "SELECT * FROM tabela_atendimento WHERE status='"+ate+"'";
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico WHERE status='"+ate+"' and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             
             try {
-                Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet resultado = stmt.executeQuery(sql);
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setStatus(resultado.getString("status"));
+                    
 
 
                     retorno.add(at);
@@ -204,9 +204,12 @@ public class AtendimentoDao {
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, e);
             }
-        }else if(n==3){
+        }else if(n==3){//pesquisa por nome do publico
             
-            String sql = "SELECT * FROM tabela_atendimento WHERE fk_publico_nome='"+ate+"' and status='Encerrada'";
+            //String sql = "SELECT * FROM tabela_atendimento WHERE fk_publico_nome='"+ate+"' and status='Encerrada'";
+            String sql = "select * from tabela_atendimento, tabela_publico "
+                    + "where tabela_publico.cpf=tabela_atendimento.fk_publico_nome and tabela_publico.nome='"+ate+"' and tabela_atendimento.status='Encerrada'";
+            
             try {
                 Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
@@ -214,11 +217,11 @@ public class AtendimentoDao {
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setServidor(resultado.getString("fk_servidor_nome"));
-
+                    at.setData_encerramento(resultado.getString("data_encerramento"));
 
                     retorno.add(at);
                 
@@ -228,7 +231,8 @@ public class AtendimentoDao {
             }
             
         }else if(n==2){
-            String sql = "SELECT * FROM tabela_atendimento WHERE tipoAtendimento='"+ate+"' and (status='Ausente' or status='Na fila')";
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE tipoAtendimento='"+ate+"' and (status='Ausente' or status='Na fila') and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             
             try {
                 Connection conn = this.conectar();
@@ -237,9 +241,9 @@ public class AtendimentoDao {
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setStatus(resultado.getString("status"));
 
 
@@ -250,8 +254,9 @@ public class AtendimentoDao {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        else if(n==4){
-            String sql = "SELECT * FROM tabela_atendimento WHERE fk_servidor_nome='"+ate+"' and status='Encerrada'";
+        else if(n==4){//nome do servidor
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE fk_servidor_nome='"+ate+"' and status='Encerrada' and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             try {
                 Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
@@ -259,11 +264,11 @@ public class AtendimentoDao {
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setServidor(resultado.getString("fk_servidor_nome"));
-
+                    at.setData_encerramento(resultado.getString("data_encerramento"));
 
                     retorno.add(at);
                 
@@ -272,20 +277,21 @@ public class AtendimentoDao {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        else if(n==5){
-            String sql = "SELECT * FROM tabela_atendimento WHERE data_encerramento='"+ate+"' and status='Encerrada'";
+        else if(n==5){//data de encerramento
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE data_encerramento='"+ate+"' and status='Encerrada' and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             try {
-                Connection conn = this.conectar();
+                
                 Statement stmt = conn.createStatement();
                 ResultSet resultado = stmt.executeQuery(sql);
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setServidor(resultado.getString("fk_servidor_nome"));
-
+                    at.setData_encerramento(resultado.getString("data_encerramento"));
 
                     retorno.add(at);
                 
@@ -294,20 +300,20 @@ public class AtendimentoDao {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        else if(n==6){
-            String sql = "SELECT * FROM tabela_atendimento WHERE tipoAtendimento='"+ate+"' and status='Encerrada'";
+        else if(n==6){//tipo de atendimento
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE tipoAtendimento='"+ate+"' and status='Encerrada' and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             try {
-                Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet resultado = stmt.executeQuery(sql);
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setServidor(resultado.getString("fk_servidor_nome"));
-
+                    at.setData_encerramento(resultado.getString("data_encerramento"));
 
                     retorno.add(at);
                 
@@ -316,20 +322,20 @@ public class AtendimentoDao {
                 JOptionPane.showMessageDialog(null, e);
             }
         }
-        else if(n==7){
-            String sql = "SELECT * FROM tabela_atendimento WHERE senha_atendimento='"+ate+"' and status='Encerrada'";
+        else if(n==7){//senha
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico "
+                    + "WHERE senha_atendimento='"+ate+"' and status='Encerrada' and tabela_publico.cpf = tabela_atendimento.fk_publico_nome";
             try {
-                Connection conn = this.conectar();
                 Statement stmt = conn.createStatement();
                 ResultSet resultado = stmt.executeQuery(sql);
                 while(resultado.next()){
                     Atendimento at = new Atendimento();
                     at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                    at.setNome(resultado.getString("fk_publico_nome"));
+                    at.setNome(resultado.getString("tabela_publico.nome"));
                     at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                    at.setEmail(resultado.getString("fk_publico_email"));
+                    at.setEmail(resultado.getString("tabela_publico.email"));
                     at.setServidor(resultado.getString("fk_servidor_nome"));
-
+                    at.setData_encerramento(resultado.getString("data_encerramento"));
 
                     retorno.add(at);
                 
@@ -343,18 +349,20 @@ public class AtendimentoDao {
     }
     
     public List<Atendimento> lista(){
-        String sql = "SELECT * FROM tabela_atendimento WHERE status = 'Na fila' or status = 'Ausente'";
+        String sql = "SELECT * FROM tabela_atendimento, tabela_publico WHERE (tabela_atendimento.status = 'Na fila' or tabela_atendimento.status = 'Ausente') "
+                + "and tabela_publico.cpf = tabela_atendimento.fk_publico_nome ";
         List<Atendimento> retorno = new ArrayList<>();
+        Connection conn = this.conectar();
         try {
-            Connection conn = this.conectar();
+            
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet resultado = stmt.executeQuery();
             while(resultado.next()){
                 Atendimento at = new Atendimento();
                 at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                at.setNome(resultado.getString("fk_publico_nome"));
+                at.setNome(resultado.getString("tabela_publico.nome"));
                 at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                at.setEmail(resultado.getString("fk_publico_email"));
+                at.setEmail(resultado.getString("tabela_publico.email"));
                 at.setStatus(resultado.getString("status"));
                 
                 
@@ -367,18 +375,17 @@ public class AtendimentoDao {
     };
     
     public List<Atendimento> listaTodosStatus(){
-        String sql = "SELECT * FROM tabela_atendimento";
+        String sql = "SELECT * FROM tabela_atendimento, tabela_publico where tabela_publico.cpf = tabela_atendimento.fk_publico_nome ";
         List<Atendimento> retorno = new ArrayList<>();
         try {
-            Connection conn = this.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet resultado = stmt.executeQuery();
             while(resultado.next()){
                 Atendimento at = new Atendimento();
                 at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                at.setNome(resultado.getString("fk_publico_nome"));
+                at.setNome(resultado.getString("tabela_publico.nome"));
                 at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                at.setEmail(resultado.getString("fk_publico_email"));
+                at.setEmail(resultado.getString("tabela_publico.email"));
                 at.setStatus(resultado.getString("status"));
                 
                 
@@ -392,18 +399,20 @@ public class AtendimentoDao {
     
     public List<Atendimento> listaEnc(){
         List<Atendimento> retorno = new ArrayList<>();
-        String sql = "SELECT * FROM tabela_atendimento WHERE status = 'Encerrada'";
+        String sql = "SELECT * FROM tabela_atendimento, tabela_publico WHERE tabela_atendimento.status = 'Encerrada' and tabela_publico.cpf=tabela_atendimento.fk_publico_nome";
+        Connection conn = this.conectar();
         try {
-            Connection conn = this.conectar();
+            
             PreparedStatement stmt = conn.prepareStatement(sql);
             ResultSet resultado = stmt.executeQuery();
             while(resultado.next()){
                 Atendimento at = new Atendimento();
                 at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                at.setNome(resultado.getString("fk_publico_nome"));
+                at.setNome(resultado.getString("tabela_publico.nome"));
                 at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                at.setEmail(resultado.getString("fk_publico_email"));
+                at.setEmail(resultado.getString("tabela_publico.email"));
                 at.setServidor(resultado.getString("fk_servidor_nome"));
+                at.setData_encerramento(resultado.getString("data_encerramento"));
                 //System.out.println(at.getEmail());
                 
                 retorno.add(at);
@@ -459,9 +468,9 @@ public class AtendimentoDao {
                 at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
                 at.setNome(resultado.getString("fk_publico_nome"));
                 at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                at.setEmail(resultado.getString("fk_publico_email"));
+                //at.setEmail(resultado.getString("fk_publico_email"));
                 at.setMatriculaServ(resultado.getInt("fk_servidor_matricula"));
-                at.setServidor(resultado.getString("fk_servidor_nome"));
+                //at.setServidor(resultado.getString("fk_servidor_nome"));
                 at.setServidor(resultado.getString("data_solicitacao"));
                 at.setServidor(resultado.getString("hora_solicitacao"));
                 at.setServidor(resultado.getString("data_atendimento"));
@@ -492,10 +501,10 @@ public class AtendimentoDao {
             
             pstmt.executeUpdate();
             pstmt.close();
-            System.out.println("Registros deletados");
+            //System.out.println("Registros deletados");
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     }
     
@@ -504,14 +513,14 @@ public class AtendimentoDao {
     }
     
     private Connection conectar(){ 
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         conn = null;
         
         try {
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, "user", "123456");
             
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
         return conn;
     }

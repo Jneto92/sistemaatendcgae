@@ -18,17 +18,18 @@ public class CriarTabelaDao {
     
     public void tabelaPublico(){
         //url de conexao
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
             //sql statement
         
         String sql = "CREATE TABLE IF NOT EXISTS tabela_publico (\n"
-                + "cpf text PRIMARY KEY, \n"
-                + "nome text NOT NULL, \n"
-                + "email text"
+                + "cpf varchar(20), \n"
+                + "nome VARCHAR(100), \n"
+                + "email varchar(100),"
+                + "constraint cpf_user PRIMARY KEY (cpf)"
                 + ");";
         
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -41,23 +42,23 @@ public class CriarTabelaDao {
     }
     public void tabelaServidor(){
         //url de conexao
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
             //sql statement
         String sql = "CREATE TABLE IF NOT EXISTS tabela_servidor (\n"
-                + "matricula integer PRIMARY KEY, \n"
-                + "nome text NOT NULL, \n"
-                + "email text not null, \n"
-                + "cpf text NOT NULL, \n"
-                + "senha_acesso text NOT NULL, \n"
-                + "telefone text, \n"
-                + "setor text not null, \n"
-                + "funcao text not null"
+                + "matricula int PRIMARY KEY, \n"
+                + "nome VARCHAR(100) NOT NULL, \n"
+                + "email VARCHAR(100) not null, \n"
+                + "cpf VARCHAR(100) NOT NULL, \n"
+                + "senha_acesso VARCHAR(100) NOT NULL, \n"
+                + "telefone VARCHAR(100), \n"
+                + "setor VARCHAR(100) not null, \n"
+                + "funcao VARCHAR(100) not null"
                 + ");";
         
         
         
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -70,32 +71,30 @@ public class CriarTabelaDao {
     }
     public void tabelaAtendimento(){
         //url de conexao
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
             //sql statement
         String sql = "CREATE TABLE IF NOT EXISTS tabela_atendimento (\n"
-                + "senha_atendimento integer primary key AUTOINCREMENT not null, \n"
-                + "fk_publico_nome text, \n"
-                + "fk_publico_email text, \n"
-                + "tipoAtendimento text, \n"
-                + "fk_servidor_matricula integer, \n"
-                + "fk_servidor_nome text, \n"
-                + "data_solicitacao text, \n"
-                + "hora_solicitacao text, \n"
-                + "data_atendimento text, \n"
-                + "hora_atendimento text, \n"
-                + "data_encerramento text, \n"
-                + "hora_encerramento text, \n"
+                + "senha_atendimento int primary key AUTO_INCREMENT, \n"
+                + "fk_publico_nome VARCHAR(100), \n"
+                + "fk_publico_email VARCHAR(100), \n"
+                + "tipoAtendimento VARCHAR(100), \n"
+                + "fk_servidor_matricula int, \n"
+                + "fk_servidor_nome VARCHAR(100), \n"
+                + "data_solicitacao VARCHAR(100), \n"
+                + "hora_solicitacao VARCHAR(100), \n"
+                + "data_atendimento VARCHAR(100), \n"
+                + "hora_atendimento VARCHAR(100), \n"
+                + "data_encerramento VARCHAR(100), \n"
+                + "hora_encerramento VARCHAR(100), \n"
                 + "observacoes varchar(500), \n"
-                + "status text, \n"
-                + "CONSTRAINT fk_publicoAtend FOREIGN KEY (fk_publico_nome) REFERENCES tabela_publico (nome) ON DELETE CASCADE, \n"
-                + "CONSTRAINT fk_publicoAtend2 FOREIGN KEY (fk_publico_email) REFERENCES tabela_publico (email) ON DELETE CASCADE, \n"
-                + "CONSTRAINT fk_servidorAtend1 FOREIGN KEY (fk_servidor_matricula) REFERENCES tabela_servidor (matricula) ON DELETE CASCADE, \n"
-                + "CONSTRAINT fk_servidorAtend2 FOREIGN KEY (fk_servidor_nome) REFERENCES tabela_servidor (nome) ON DELETE CASCADE\n"
+                + "status VARCHAR(100), \n"
+                + "CONSTRAINT fk_publicoAtend FOREIGN KEY (fk_publico_nome) REFERENCES tabela_publico (cpf) ON DELETE CASCADE, \n"
+                + "CONSTRAINT fk_servidorAtend1 FOREIGN KEY (fk_servidor_matricula) REFERENCES tabela_servidor (matricula) ON DELETE CASCADE \n"
                 + ");";
         
         
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -108,7 +107,7 @@ public class CriarTabelaDao {
     }
     
     public void tabelaTipoAtendimento(){
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         
         String sql = "CREATE TABLE IF NOT EXISTS tabela_tipoAtendimento (\n"
                 + "id_tipo integer PRIMARY KEY, \n"
@@ -116,7 +115,7 @@ public class CriarTabelaDao {
                 + ");";
         
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -128,7 +127,7 @@ public class CriarTabelaDao {
         }
     }
     public void tabelaStatus(){
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         
         String sql = "CREATE TABLE IF NOT EXISTS tabela_status (\n"
                 + "id_status integer PRIMARY KEY, \n"
@@ -136,7 +135,7 @@ public class CriarTabelaDao {
                 + ");";
         
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -148,10 +147,10 @@ public class CriarTabelaDao {
         }
     }
     public void deletarTbAtendimento(){
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         String sql = "DROP TABLE IF EXISTS tabela_atendimento";
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -163,10 +162,10 @@ public class CriarTabelaDao {
         }
     }
     public void deletarTbServidor(){
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         String sql = "DROP TABLE IF EXISTS tabela_servidor";
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela
@@ -178,10 +177,10 @@ public class CriarTabelaDao {
         }
     }
     public void deletarTbPublico(){
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         String sql = "DROP TABLE IF EXISTS tabela_publico";
         try {
-            Connection conn = DriverManager.getConnection(url);
+            Connection conn = DriverManager.getConnection(url, "user", "123456");
             //intanciar o stantement
             Statement  stmt = conn.createStatement();
             //Criar nova tabela

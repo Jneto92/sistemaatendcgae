@@ -62,28 +62,31 @@ public class ServidorDao {
     }
     
     public void updateServidor(Servidor serv){
-        String sql = "UPDATE tabela_servidor SET matricula=?, email=?, cpf=?, telefone=?, setor=?, funcao=? WHERE nome=?";
+        String sql = "UPDATE tabela_servidor SET matricula=?, email=?, nome=?, telefone=?, setor=?, funcao=? WHERE cpf=?";
         //String sql = "INSERT INTO tabela_servidor(matricula, nome, email, cpf, telefone, setor, funcao) VALUES(?, ?, ?, ?, ?, ?, ?)";
-        System.out.println(serv.getFuncao());
-        try {
-            Connection conn = this.conectar();
+        System.out.println(serv.getCpf());
+        
             
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, serv.getMatricula());
-            pstmt.setString(2, serv.getEmail());
-            pstmt.setString(3, serv.getCpf());
-            pstmt.setString(4, serv.getTelefone());
-            pstmt.setString(5, serv.getSetor());
-            pstmt.setString(6, serv.getFuncao());
-            pstmt.setString(7, serv.getNome());
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                if(pstmt != null){
+                    pstmt.setInt(1, serv.getMatricula());
+                    pstmt.setString(2, serv.getEmail());
+                    pstmt.setString(3, serv.getNome());
+                    pstmt.setString(4, serv.getTelefone());
+                    pstmt.setString(5, serv.getSetor());
+                    pstmt.setString(6, serv.getFuncao());
+                    pstmt.setString(7, serv.getCpf());
+
+                    pstmt.executeUpdate();
+                    System.out.println("Registros atualizados");
+                }
+                
+            } catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
             
-            pstmt.executeUpdate();
-            pstmt.close();
-            System.out.println("Registros atualizados");
             
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        
     }
     
     public void deletarServidor(Servidor serv){
@@ -183,11 +186,11 @@ public class ServidorDao {
     }
     
     private Connection conectar(){ 
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         conn = null;
         
         try {
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, "user", "123456");
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());

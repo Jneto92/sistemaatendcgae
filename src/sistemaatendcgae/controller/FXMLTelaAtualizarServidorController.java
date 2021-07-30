@@ -135,7 +135,7 @@ public class FXMLTelaAtualizarServidorController implements Initializable {
             ServidorDao dao = new ServidorDao();
             dao.updateServidor(serv);
             limparCampos(event);
-            JOptionPane.showMessageDialog(null, "Registro feito com sucesso");
+            JOptionPane.showMessageDialog(null, "Atualização feita com sucesso.");
         }
         
     }

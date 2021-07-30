@@ -5,6 +5,7 @@
  */
 package sistemaatendcgae.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -122,6 +123,8 @@ public class FXMLTelaSistemaController implements Initializable {
     
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -211,6 +214,7 @@ public class FXMLTelaSistemaController implements Initializable {
             ServidorDao daoSv = new ServidorDao();
             daoSv.deletarServidor(sv);
             gerarListaServidor(event);
+            JOptionPane.showMessageDialog(null, "Funcionário excluído com sucesso.");
         }else{
             JOptionPane.showMessageDialog(null, "Selecione algum servidor para a exclusão.");
         }
@@ -220,15 +224,24 @@ public class FXMLTelaSistemaController implements Initializable {
 
     @FXML
     private void resetarAtendimentos(ActionEvent event) {
-        CriarTabelaDao ct = new  CriarTabelaDao();
-        ct.deletarTbAtendimento();
-        ct.tabelaAtendimento();
+        int input = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja restaurar a lista de atendimentos?", "Restaurar"
+                + " atendimentos", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+        if(input==1){
+            
+        }else{
+            File home = new File(System.getProperty("user.name"));
+            JOptionPane.showMessageDialog(null, "Esta funcionalidade permite que todos os atendimentos não aparecem mais no sistemas atual, porém todos os atendimentos são salvos"
+                    + " no relatório diário salvo na pasta C:\\Users\\"+home+"\\Documents\\sistemaatedcgae\\relatorios");
+            CriarTabelaDao ct = new  CriarTabelaDao();
+            ct.deletarTbAtendimento();
+            ct.tabelaAtendimento();
+        }
+        
         
     }
 
     @FXML
     private void gerarListaAtendimento(ActionEvent event) {
-        
         visualizacao = 1;
         colSenha.setCellValueFactory(new PropertyValueFactory<>("senha_atendimento"));
         colNomeAt.setCellValueFactory(new PropertyValueFactory<>("nome"));//coluna para setar na table view
@@ -268,7 +281,7 @@ public class FXMLTelaSistemaController implements Initializable {
                             atDao.updateStatusAtendimento(at, 1);
                             gerarListaAtendimento(event);
                         }
-
+                        JOptionPane.showMessageDialog(null, "Status alterado com sucesso.");
                     }
                 }else{
                     
@@ -286,8 +299,11 @@ public class FXMLTelaSistemaController implements Initializable {
     
     @FXML
     private void resetarSistema(ActionEvent event) throws IOException {
-        int input = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer resetar o sistemas completamente?", "Resetar sistema", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
+        int input = JOptionPane.showConfirmDialog(null, "Você tem certeza que quer resetar o sistema completamente?", "Resetar sistema", 
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
         if(input==0){
+            JOptionPane.showMessageDialog(null, "Com esta funcionalidade, todo os sistema é restaurado ao ponto zero, para acessar novamento o sistema use "
+                    + "a conta de administrador padrão do sistema.");
             CriarTabelaDao ct = new  CriarTabelaDao();
             ct.deletarTbAtendimento();
             ct.deletarTbPublico();
@@ -312,10 +328,5 @@ public class FXMLTelaSistemaController implements Initializable {
         }
         
     }
-    
-    
-    
-    
-    
     
 }

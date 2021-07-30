@@ -182,6 +182,10 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     private JFXTextField txfPesqEnc;
     @FXML
     private Button btnDeletar;
+    @FXML
+    private Button btnAtualizarEnc;
+    @FXML
+    private TableColumn<?, ?> colData;
     
     
     
@@ -229,8 +233,6 @@ public class FXMLTelaServidorCgaeController implements Initializable {
                     JOptionPane.showMessageDialog(null, "Campo vazio.");
                 }else{
                     
-                
-                    
                     metodoPesquisaEnc(txfPesqEnc.getText(), 3);
                 }
                 break;
@@ -271,6 +273,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipoAtendimento"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colServidor1.setCellValueFactory(new PropertyValueFactory<>("servidor"));
+        colData.setCellValueFactory(new PropertyValueFactory<>("data_encerramento"));
         listAtendimento = atendimentoDao.listaPesq(metodo, n);
         observableAtendimento = FXCollections.observableArrayList(listAtendimento);
         tabelaAtEncerrados.setItems(observableAtendimento);
@@ -387,11 +390,11 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     }
     
     private Connection conectar(){ 
-        String url = "jdbc:sqlite:C:/Users/NETO/Documents/NetBeansProjects/SistemaAtendCgae/src/banco_de_dados/banco_sqlite.db";
+        String url = "jdbc:mysql://192.168.15.14:3306/sistemacgae";
         Connection conn = null;
         
         try {
-            conn = DriverManager.getConnection(url);
+            conn = DriverManager.getConnection(url, "user", "123456");
             
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -404,17 +407,19 @@ public class FXMLTelaServidorCgaeController implements Initializable {
         try {
             Connection conn = this.conectar();
             
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            cmpMatricula.setText(rs.getString("matricula"));
-            cmpNome.setText(rs.getString("nome"));
-            cmpEmail.setText(rs.getString("email"));
-            cmpSetor.setText(rs.getString("setor"));
-            cmpTelefone.setText(rs.getString("telefone"));
-            senhaLogada = rs.getString("senha_acesso");
-            cmpFuncao.setText(rs.getString("funcao"));
-            rs.close();
-            stmt.close();
+            try (Statement stmt = conn.createStatement()) {
+                ResultSet rs = stmt.executeQuery(sql);
+                if(rs != null && rs.next()){
+                    cmpMatricula.setText(rs.getString("matricula"));
+                    cmpNome.setText(rs.getString("nome"));
+                    cmpEmail.setText(rs.getString("email"));
+                    cmpSetor.setText(rs.getString("setor"));
+                    cmpTelefone.setText(rs.getString("telefone"));
+                    senhaLogada = rs.getString("senha_acesso");
+                    cmpFuncao.setText(rs.getString("funcao"));
+                    rs.close();
+                }
+            }
            
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -428,7 +433,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             int input = JOptionPane.showConfirmDialog(null, "Você possui um atendimento em andamento. \n"
                     + "clique Sim para encerrar o atendimento atual e delogar. \n"
                     + "Clique em Não para cancelar o atendimento e deslogar. \n"
-                    + "Clique em Cancelar para voltar a tela do servidor.", "Alterar Senha", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE );
+                    + "Clique em Cancelar para voltar a tela do servidor.", "Logout", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE );
             //System.out.println(input);
             if(input==0){
                 encerrarAtendimento(event);
@@ -464,19 +469,21 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     private void alterarSenha(ActionEvent event) {
         String sql = "UPDATE tabela_servidor SET senha_acesso=? WHERE matricula="+FXMLTelaLoginController.userLogado+"";
         
-        try {
+        
             Connection conn = this.conectar();
             
             
             if (!senhaLogada.equals(novaSenha.getText())) {
                 int input = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja alterar a senha antiga?", "Alterar Senha", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
-                if(input==1){
+                if(input==0){
                    
-                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                    pstmt.setString(1, novaSenha.getText());
-
-                    pstmt.executeUpdate();
-                    pstmt.close();
+                    try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                        pstmt.setString(1, novaSenha.getText());
+                        
+                        pstmt.executeUpdate();
+                    }catch(SQLException e){
+                        System.out.println(e);
+                    }
                     //System.out.println("Alterado para "+novaSenha.getText());
                     novaSenha.setText("");
                     JOptionPane.showMessageDialog(null, "Senha alterada com sucesso!");
@@ -490,9 +497,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             }
             
             
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        
         
     }
     
@@ -589,6 +594,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
                     carregarAtendimento(event);
 
                     carregarLista(event);
+                    JOptionPane.showMessageDialog(null, "Senha atendida. Continue o atendimento na secção de Atendimento");
                 }else{
                     JOptionPane.showMessageDialog(null, "Já existe um atendimento em andamento.");
                     //System.out.println(listSelecionado.get(0).getSenha_atendimento());
@@ -631,6 +637,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             atDao.encerrarAtendimento(at);
             gerarRelatorio(event);
             limparCamposAtend();
+            JOptionPane.showMessageDialog(null, "Atendimento encerrado e registrado com sucesso.");
         }else{
             JOptionPane.showMessageDialog(null, "Nenhuma senha em atendimento no momento!");
             
@@ -645,19 +652,22 @@ public class FXMLTelaServidorCgaeController implements Initializable {
         if(verificarAtendimentoEmAndamento()==true){
             
         }else{
-            String sql = "SELECT * FROM tabela_atendimento WHERE senha_atendimento="+senhaAt+"";
+            String sql = "SELECT * FROM tabela_atendimento, tabela_publico WHERE senha_atendimento="+senhaAt+" and tabela_publico.cpf=tabela_atendimento.fk_publico_nome";
             try {
                 Connection conn = this.conectar();
 
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(sql);
-                cmpSenhaAt.setText(rs.getString("senha_atendimento"));
-                cmpNomeAt.setText(rs.getString("fk_publico_nome"));
-                cmpEmailAt.setText(rs.getString("fk_publico_email"));
-                cmpTipoAt.setText(rs.getString("tipoAtendimento"));
-
-                rs.close();
-                stmt.close();
+                try (Statement stmt = conn.createStatement()) {
+                    ResultSet rs = stmt.executeQuery(sql);
+                    if(rs != null && rs.next()){
+                        cmpSenhaAt.setText(rs.getString("senha_atendimento"));
+                        cmpNomeAt.setText(rs.getString("tabela_publico.nome"));
+                        cmpEmailAt.setText(rs.getString("tabela_publico.email"));
+                        cmpTipoAt.setText(rs.getString("tipoAtendimento"));
+                    
+                    rs.close();
+                    }
+                    
+                }
 
             } catch (SQLException e) {
                 //JOptionPane.showMessageDialog(null, "Nenhuma atendimento em andamento!");
@@ -674,6 +684,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             AtendimentoDao atDao = new AtendimentoDao();
             atDao.updateStatusAtendimento(at, 1);
             limparCamposAtend();
+            JOptionPane.showMessageDialog(null, "Atendimento cancelado.");
         }else{
             JOptionPane.showMessageDialog(null, "Nenhuma senha em atendimento no momento!");
         }
@@ -684,12 +695,14 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     private void mostrarEncerrados(Event event) {
         cmbBoxPesquisa1.setValue("");
         cmbBoxEscolha1.setVisible(false);
+        cmbBoxPesquisaEnc.setVisible(false);
         txfPesqEnc.setVisible(false);
         colSenha1.setCellValueFactory(new PropertyValueFactory<>("senha_atendimento"));
         colNome1.setCellValueFactory(new PropertyValueFactory<>("nome"));//coluna para setar na table view
         colTipo1.setCellValueFactory(new PropertyValueFactory<>("tipoAtendimento"));
         colEmail1.setCellValueFactory(new PropertyValueFactory<>("email"));
         colServidor1.setCellValueFactory(new PropertyValueFactory<>("servidor"));
+        colData.setCellValueFactory(new PropertyValueFactory<>("data_encerramento"));
         listAtendimento = atendimentoDao.listaEnc();
         observableAtendimento = FXCollections.observableArrayList(listAtendimento);
         tabelaAtEncerrados.setItems(observableAtendimento);
@@ -699,7 +712,8 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     public void gerarRelatorio(ActionEvent event) {
         listAtendimento = atendimentoDao.listaCompleta();
         Arquivos ar = new Arquivos();
-        String sql = "SELECT * FROM tabela_atendimento where senha_atendimento= "+senhaAt+"";
+        String sql = "SELECT * FROM tabela_atendimento, tabela_publico, tabela_servidor "
+                + "where senha_atendimento= "+senhaAt+" and tabela_publico.cpf=tabela_atendimento.fk_publico_nome";
         try {
             Connection conn = this.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql);
@@ -707,11 +721,11 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             while(resultado.next()){
                 Atendimento at = new Atendimento();
                 at.setSenha_atendimento(resultado.getInt("senha_atendimento"));
-                at.setNome(resultado.getString("fk_publico_nome"));
+                at.setNome(resultado.getString("tabela_publico.nome"));
                 at.setTipoAtendimento(resultado.getString("tipoAtendimento"));
-                at.setEmail(resultado.getString("fk_publico_email"));
-                at.setMatriculaServ(resultado.getInt("fk_servidor_matricula"));
-                at.setServidor(resultado.getString("fk_servidor_nome"));
+                at.setEmail(resultado.getString("tabela_publico.email"));
+                at.setMatriculaServ(resultado.getInt("tabela_servidor.matricula"));
+                at.setServidor(resultado.getString("tabela_servidor.nome"));
                 at.setData_solicitacao(resultado.getString("data_solicitacao"));
                 at.setHora_solicitacao(resultado.getString("hora_solicitacao"));
                 at.setData_atendimento(resultado.getString("data_atendimento"));
@@ -739,6 +753,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             //stage.initStyle(StageStyle.UNDECORATED);
             stage.setScene(scene);
             stage.show();
+            
         } catch (IOException e) {
             Logger.getLogger(FXMLTelaPrincipalController.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -763,14 +778,14 @@ public class FXMLTelaServidorCgaeController implements Initializable {
             stage.setScene(scene);
             stage.show();
         }else{
-            JOptionPane.showMessageDialog(null, "Você não tem permissão!");
+            JOptionPane.showMessageDialog(null, "Você não tem permissão de administrador!");
         }
     }
     
     @FXML
     private void encaminharAtendimento(ActionEvent event) {
         if(ocupado==true){
-            String[] tipo = {"Monitoria", "Pincel", "Auxílios", "Pscóloga", "outros"};
+            String[] tipo = {"Monitoria", "Pincel", "Auxilios", "Psicologa", "outros"};
             JComboBox<String> tp = new JComboBox<>(tipo);
             tp.setEditable(true);
             String[] option = {"Ok", "Cancelar"};
@@ -783,13 +798,14 @@ public class FXMLTelaServidorCgaeController implements Initializable {
                 Atendimento at = new Atendimento(senhaAt, "", "", "Na fila", escolha);
                 AtendimentoDao atDao = new AtendimentoDao();
                 try {
-                    atDao.updateStatusAtendimento(at, 2);
+                    atDao.updateStatusAtendimento(at, 3);
                 } catch (ParseException ex) {
                     Logger.getLogger(FXMLTelaServidorCgaeController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 limparCamposAtend();
+                JOptionPane.showMessageDialog(null, "Atendimento encaminhado para "+escolha);
             }else{
-
+                
             }
         }else{
             JOptionPane.showMessageDialog(null, "Nenhuma senha em atendimento no momento!");
@@ -811,6 +827,7 @@ public class FXMLTelaServidorCgaeController implements Initializable {
                 Logger.getLogger(FXMLTelaServidorCgaeController.class.getName()).log(Level.SEVERE, null, ex);
             }
             limparCamposAtend();
+            JOptionPane.showMessageDialog(null, "Atendimento colocado em espera.");
         }else{
             JOptionPane.showMessageDialog(null, "Nenhuma senha em atendimento no momento!");
         }
@@ -825,12 +842,18 @@ public class FXMLTelaServidorCgaeController implements Initializable {
                 AtendimentoDao daoAt = new AtendimentoDao();
                 daoAt.deletarAtendimento(at);
                 atualizarLista(event);
+                JOptionPane.showMessageDialog(null, "Atendimento excluído com sucesso.");
             }else{
                 JOptionPane.showMessageDialog(null, "Você não tem permissão!");
             }
         }else{
             JOptionPane.showMessageDialog(null, "Selecione alguma senha para poder prosseguir com a exclusão.!");
         }
+    }
+    
+    @FXML
+    private void atualizarAtEnc(ActionEvent event) {
+        mostrarEncerrados(event);
     }
     
     
@@ -1262,6 +1285,8 @@ public class FXMLTelaServidorCgaeController implements Initializable {
     public void setBtnEncaminharAt(Button btnEncaminharAt) {
         this.btnEncaminharAt = btnEncaminharAt;
     }
+
+    
 
     
 

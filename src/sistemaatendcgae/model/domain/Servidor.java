@@ -37,7 +37,7 @@ public class Servidor {
         this.funcao = funcao;
     }
 
-    public Servidor(int matricula, String nome, String email, String telefone, String cpf, String setor, String funcao) {
+    public Servidor(int matricula, String nome, String email, String cpf, String telefone, String setor, String funcao) {
         this.matricula = matricula;
         this.nome = nome;
         this.email = email;

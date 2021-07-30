@@ -154,20 +154,24 @@ public class FXMLTelaCadastroServidorController implements Initializable {
                 lb8.setVisible(false);
             }
         }else{
+            if(cmpSenha.getText().equals(cmpCsenha.getText())){
+                int matricula = Integer.parseInt(cmpMatricula.getText());
+                String nome = cmpNome.getText();
+                String cpf = cmpCpf.getText();
+                String email = cmpEmail.getText();
+                String senha = cmpSenha.getText();
+                String fone = cmpFone.getText();
+                String setor = cmpSetor.getText();
+                String funcao = cmbBoxFuncao.getValue();
+                Servidor serv = new Servidor(matricula, nome, email, cpf, senha, fone, setor, funcao);
+                ServidorDao dao = new ServidorDao();
+                dao.registrarServidor(serv);
+                limparCampo();
+                JOptionPane.showMessageDialog(null, "Registro feito com sucesso");
+            }else{
+                JOptionPane.showMessageDialog(null, "A senha digitada não confere com a senha confirmada.");
+            }
             
-            int matricula = Integer.parseInt(cmpMatricula.getText());
-            String nome = cmpNome.getText();
-            String cpf = cmpCpf.getText();
-            String email = cmpEmail.getText();
-            String senha = cmpSenha.getText();
-            String fone = cmpFone.getText();
-            String setor = cmpSetor.getText();
-            String funcao = cmbBoxFuncao.getValue();
-            Servidor serv = new Servidor(matricula, nome, email, cpf, senha, fone, setor, funcao);
-            ServidorDao dao = new ServidorDao();
-            dao.registrarServidor(serv);
-            limparCampo();
-            JOptionPane.showMessageDialog(null, "Registro feito com sucesso");
            
             
         }
